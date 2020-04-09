@@ -10,6 +10,7 @@ module.exports = function (req, res, next) {
     .then(processSequence)
     .then(({ taxon, tax_id, lineage }) => {
       res.send({
+        success: true,
         taxon,
         taxId: tax_id,
         lineage,

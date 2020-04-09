@@ -50,9 +50,9 @@ export default {
       this.$store.commit("setFilter", filter);
     },
     startUpload() {
-      const entry = this.data.entries.find((x) => x.Status === "Pending");
-      if (entry) {
-        this.$store.dispatch("uploadEntry", entry._id)
+      const item = this.data.find((x) => x.status === "Pending");
+      if (item) {
+        this.$store.dispatch("uploadOne", item.id)
           .catch((error) => console.error(error))
           .then(() => {
             setTimeout(() => this.startUpload(), 0);

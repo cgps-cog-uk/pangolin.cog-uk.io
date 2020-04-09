@@ -32,7 +32,6 @@
 
 <script>
 import { mapMutations } from "vuex";
-import dataFromFile from "../assets/scripts/data-from-file";
 
 export default {
   data() {
@@ -52,8 +51,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setData: "setData",
-      setUploading: "setUploading",
+      enqueueFiles: "addFilesToQueue",
     }),
     handleFileChange(event) {
       const files = event.target.files;
@@ -80,14 +78,7 @@ export default {
     },
     processFiles(files) {
       if (files.length) {
-        dataFromFile(files[0])
-          .then((data) => {
-            this.setData(data);
-            this.setUploading(false);
-          })
-          .catch((error) => {
-            this.setInfoMessage(error.message);
-          });
+        this.enqueueFiles(files);
       }
     },
   },

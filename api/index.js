@@ -29,25 +29,25 @@ app.use((req, res, next) => {
 
 app.use(
   "/api",
-  // jwt({
-  //   secret: config.secret,
-  //   getToken(req) {
-  //     if (req.headers.authorization) {
-  //       const [ method, token ] = req.headers.authorization.split(" ");
-  //       if (method === "Bearer") {
-  //         return token;
-  //       }
-  //     }
-  //     else if (req.cookies && req.cookies["auth._token.local"]) {
-  //       const [ method, token ] = req.cookies["auth._token.local"].split(" ");
-  //       if (method === "Bearer") {
-  //         return token;
-  //       }
-  //     }
-  //     return null;
-  //   },
-  // })
-  //   .unless({ path: [ "/api/auth/login" ] }),
+  jwt({
+    secret: config.secret,
+    getToken(req) {
+      if (req.headers.authorization) {
+        const [ method, token ] = req.headers.authorization.split(" ");
+        if (method === "Bearer") {
+          return token;
+        }
+      }
+      else if (req.cookies && req.cookies["auth._token.local"]) {
+        const [ method, token ] = req.cookies["auth._token.local"].split(" ");
+        if (method === "Bearer") {
+          return token;
+        }
+      }
+      return null;
+    },
+  })
+    .unless({ path: [ "/api/auth/login" ] }),
   require("./routes")
 );
 
