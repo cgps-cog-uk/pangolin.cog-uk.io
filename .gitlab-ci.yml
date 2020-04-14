@@ -10,12 +10,12 @@ build:
     - TAG=$(echo $CI_COMMIT_REF_NAME | cut -d'.' -f 1)
     - docker build
       --force-rm
-      --tag registry.gitlab.com/cgps/cog-uk/metadata.cog-uk.io:$TAG
+      --tag registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:$TAG
       --build-arg REPO_USER=gitlab-ci-token 
       --build-arg REPO_TOKEN=${CI_JOB_TOKEN} 
       .
     - docker push
-      registry.gitlab.com/cgps/cog-uk/metadata.cog-uk.io:$TAG
+      registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:$TAG
     - docker rmi
       --force
-      registry.gitlab.com/cgps/cog-uk/metadata.cog-uk.io:$TAG
+      registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:$TAG
