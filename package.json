@@ -1,7 +1,7 @@
 {
-  "name": "cog-uk",
-  "version": "68.0.0",
-  "description": "COG-UK",
+  "name": "pangolin.cog-uk.io",
+  "version": "0.0.0",
+  "description": "pangolin.cog-uk.io",
   "author": "CGPS",
   "private": true,
   "scripts": {
