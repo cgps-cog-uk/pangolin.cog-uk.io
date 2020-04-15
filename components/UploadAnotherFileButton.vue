@@ -28,7 +28,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import dataFromFile from "../assets/scripts/data-from-file";
+import sequencesFromFiles from "../assets/scripts/sequences-from-files";
 
 export default {
   data() {
@@ -43,21 +43,15 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setData: "setData",
-      setUploading: "setUploading",
+      enqueueFiles: "addSequencesToQueue",
     }),
     handleFileChange(event) {
       this.setInfoMessage(null);
       const files = event.target.files;
       if (files.length) {
-        dataFromFile(files[0])
-          .then((data) => {
-            this.setData(data);
-            this.setUploading(false);
-          })
-          .catch((error) => {
-            this.setInfoMessage(error.message);
-          });
+        sequencesFromFiles(files)
+          .then((sequences) => this.enqueueFiles(sequences))
+          .catch((err) => this.setInfoMessage(err.message || err));
       }
     },
     setInfoMessage(message) {

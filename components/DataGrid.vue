@@ -86,16 +86,12 @@ export default {
     headers() {
       return [
         {
-          value: "name",
+          value: "file",
           text: "File name",
         },
         {
-          value: "taxon",
-          text: "Taxon",
-        },
-        {
-          value: "taxId",
-          text: "Tax ID",
+          value: "name",
+          text: "Sequence name",
         },
         {
           value: "lineage",
