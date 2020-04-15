@@ -8,7 +8,12 @@ module.exports = function (fastaStream) {
     fastaStream.on("error", (err) => {
       container.destroy(() => reject(err));
     });
-    fastaStream.pipe(container.stdin);
+    fastaStream.on("data", (data) => {
+      console.log('got data', data);
+      container.stdin.write(data);
+    });
+    fastaStream.on("end", (data) => container.stdin.end());
+    // fastaStream.pipe(container.stdin);
 
     const buffer = [];
     container.stdout.on("data", (data) => {
