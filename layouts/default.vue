@@ -4,7 +4,7 @@
       <header>
         <h1>
           <a href="/">
-            <img title="COG-UK Sample Metadata Uploader" src="/images/cog-uk-metadata.png">
+            <img title="Pangolin" src="/images/pangolin.png">
           </a>
         </h1>
         <nav>
@@ -25,9 +25,6 @@
           Logged in as <strong>{{ $auth.user.username }}</strong>
         </span>
         <ul>
-          <li>
-            <a href="mailto:metadata-support@cog-uk.io">metadata-support@cog-uk.io</a>
-          </li>
           <li>
             <a href="/logout">
               Log out
