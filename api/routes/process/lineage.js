@@ -4,7 +4,7 @@
 const processSequence = require("../../utils/process-sequence");
 
 module.exports = function (req, res, next) {
-  console.info("Got request to process a fasta file for", req.user);
+  console.info("Got request to process a fasta file for", req.user, req.headers);
 
   Promise.resolve(req)
     .then(processSequence)
