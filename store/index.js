@@ -15,15 +15,15 @@ export const state = () => ({
 });
 
 export const mutations = {
-  addFilesToQueue(state, files) {
-    for (const file of files) {
+  addSequencesToQueue(state, sequences) {
+    for (const item of sequences) {
       state.data.push({
         id: (++lastId).toString(),
         error: null,
         status: "Pending",
-        name: file.name,
-        file,
-        _messages: {},
+        file: item.file,
+        name: item.name,
+        sequence: item.sequence,
       });
     }
     state.mode = "data";
@@ -33,14 +33,15 @@ export const mutations = {
     state.mode = "files";
     state.uploading = false;
   },
-  setEntryStatus(state, { entryId, status, error, taxon, taxId, lineage }) {
+  setEntryStatus(state, { entryId, status, error, lineage }) {
     const entry = state.data.find((x) => x.id === entryId);
     if (entry) {
       entry.status = status;
-      entry.taxon = taxon;
-      entry.taxId = taxId;
       entry.lineage = lineage;
       entry.error = error;
+      if (status === "Success") {
+        entry.sequence = null;
+      }
     }
   },
   setMode(state, mode) {
@@ -56,23 +57,21 @@ export const getters = {
 
 export const actions = {
   downloadRows({ state }, { status = "Failed" }) {
-    const entries = state.data.entries.filter((x) => x.Status === status);
+    const entries = state.data.entries.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
-    for (const { _error, id, _messages, Status, ...rest } of entries) {
+    for (const { name, taxon, taxId, lineage } of entries) {
       const row = {
-        Error: _error,
-        ...rest,
+        "File name": name,
+        Taxon: taxon,
+        "Tax ID": taxId,
+        Lineage: lineage,
       };
-      for (const [ field, message ] of Object.entries(_messages)) {
-        // eslint-disable-next-line prefer-template
-        row[field] = (rest[field] || "") + "⚠️" + message;
-      }
       rows.push(row);
     }
     exportCsv(
       rows,
-      "failed-rows.csv"
+      "results.csv"
     );
   },
   uploadOne({ commit, state }, entryId) {
@@ -85,7 +84,7 @@ export const actions = {
           method: "POST",
           url: "/api/process/lineage/",
           headers: { "Content-Type": "text/plain" },
-          data: entry.file,
+          data: entry.sequence,
         })
           .then((response) => response.data)
           .then((response) => {
@@ -95,8 +94,6 @@ export const actions = {
               {
                 entryId,
                 status,
-                taxon: response.taxon,
-                taxId: response.taxId,
                 lineage: response.lineage,
               }
             );

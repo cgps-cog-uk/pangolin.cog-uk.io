@@ -8,15 +8,15 @@ const config = require("./utils/config");
 const app = express();
 
 app.use(
-  bodyParser.json({ limit: "500mb" })
+  bodyParser.json({ limit: "1mb" })
 );
-// app.use(
-//   bodyParser.raw({})
-// );
+app.use(
+  bodyParser.text({ limit: "1mb" })
+);
 app.use(
   bodyParser.urlencoded({
     extended: true,
-    limit: "500mb",
+    limit: "1mb",
   })
 );
 

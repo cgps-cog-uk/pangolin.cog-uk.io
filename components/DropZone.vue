@@ -20,18 +20,14 @@
     >
       Select files to upload
     </label>
-    <div>or</div>
-    <nuxt-link
-      to="/form"
-    >
-      Add a single entry
-    </nuxt-link>
     <p>{{ message }}</p>
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+
+import sequencesFromFiles from "../assets/scripts/sequences-from-files";
 
 export default {
   data() {
@@ -51,7 +47,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      enqueueFiles: "addFilesToQueue",
+      enqueueFiles: "addSequencesToQueue",
     }),
     handleFileChange(event) {
       const files = event.target.files;
@@ -78,7 +74,9 @@ export default {
     },
     processFiles(files) {
       if (files.length) {
-        this.enqueueFiles(files);
+        sequencesFromFiles(files)
+          .then((sequences) => this.enqueueFiles(sequences))
+          .catch((err) => this.setInfoMessage(err.message || err));
       }
     },
   },
