@@ -56,23 +56,21 @@ export const getters = {
 
 export const actions = {
   downloadRows({ state }, { status = "Failed" }) {
-    const entries = state.data.entries.filter((x) => x.Status === status);
+    const entries = state.data.entries.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
-    for (const { _error, id, _messages, Status, ...rest } of entries) {
+    for (const { name, taxon, taxId, lineage } of entries) {
       const row = {
-        Error: _error,
-        ...rest,
+        "File name": name,
+        Taxon: taxon,
+        "Tax ID": taxId,
+        Lineage: lineage,
       };
-      for (const [ field, message ] of Object.entries(_messages)) {
-        // eslint-disable-next-line prefer-template
-        row[field] = (rest[field] || "") + "⚠️" + message;
-      }
       rows.push(row);
     }
     exportCsv(
       rows,
-      "failed-rows.csv"
+      "results.csv"
     );
   },
   uploadOne({ commit, state }, entryId) {
