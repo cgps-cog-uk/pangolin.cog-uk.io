@@ -16,9 +16,10 @@ module.exports = function (req, res, next) {
         lineage,
       });
     })
-    .catch((error) => {
-      res
-        .status(400)
-        .send(error);
-    });
+    .catch(next);
+    // .catch((error) => {
+    //   res
+    //     .status(400)
+    //     .send(error);
+    // });
 };

@@ -4,7 +4,7 @@ const config = require("./config");
 module.exports = function (fastaStream) {
   return new Promise((resolve, reject) => {
     const startTime = process.hrtime();
-    const container = docker(config.imageName);
+    const container = docker(config.imageName, { remove: false });
     fastaStream.on("error", (err) => {
       container.destroy(() => reject(err));
     });
