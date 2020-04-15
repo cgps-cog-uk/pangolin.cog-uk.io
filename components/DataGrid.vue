@@ -40,26 +40,31 @@
           </template>
         </td>
       </template>
+      <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded, isMobile, headers }">
+        <v-icon v-if="item.status === 'Pending'">mdi-timer-sand-empty</v-icon>
+        <v-icon v-else-if="item.status === 'Uploading'">mdi-progress-upload</v-icon>
+        <v-icon v-else-if="item.status === 'Uploaded'">mdi-check</v-icon>
+        <v-icon
+          v-else-if="item.status === 'Failed'"
+          class="v-data-table__expand-icon"
+          v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
+          title="Failed, click to see details."
+          v-on:click="expand(!isExpanded)"
+        >
+          {{ isExpanded ? "mdi-alert-circle" : "mdi-alert-circle-outline" }}
+        </v-icon>
+      </template>
       <template v-slot:expanded-item="{ headers, item }">
-        <tr class="expanded-cells">
-          <td
-            v-for="header in headers"
-            v-bind:key="header.name"
-            class="text-start"
-            v-bind:class="{ 'has-error': item._messages[header.value] }"
+        <td
+          class="text-start"
+          v-bind:colspan="headers.length"
+        >
+          <strong
+            v-if="item.error"
           >
-            <strong
-              v-if="item._messages[header.value]"
-            >
-              {{ item._messages[header.value] }}
-            </strong>
-          </td>
-        </tr>
-        <tr class="expanded-info">
-          <td v-bind:colspan="headers.length">
-            {{ item._error }}
-          </td>
-        </tr>
+            {{ item.error }}
+          </strong>
+        </td>
       </template>
     </v-data-table>
   </div>
@@ -81,11 +86,6 @@ export default {
     headers() {
       return [
         {
-          value: "Status",
-          text: "Status",
-          width: 88,
-        },
-        {
           value: "name",
           text: "File name",
         },
@@ -101,15 +101,11 @@ export default {
           value: "lineage",
           text: "Lineage",
         },
-        {
-          value: "error",
-          text: "error",
-        },
       ];
     },
   },
   methods: {
-    onDownloadFailedRowsClick() {
+    onDownloadRowsClick() {
       this.$store.dispatch(
         "downloadRows",
         { status: "Failed" }
