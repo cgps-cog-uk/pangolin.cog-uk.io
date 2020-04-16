@@ -1,25 +1,23 @@
 const path = require("path");
 const Queue = require("better-queue");
-// const SQLStore = require("better-queue-sql");
 
-// const processSequence = require("./process-sequence");
-
-// const store = new SQLStore({
-//   type: "sql",
-//   dialect: "sqlite",
-//   path: "./db.sqlite",
-//   // acquireConnectionTimeout: 2000,
-// });
+const processSequence = require("./process-sequence");
+const store = require("./store");
+const sha1 = require("./hash-sequence");
 
 const q = new Queue(
   (input, cb) => {
-    console.log(input);
-    cb(0);
-    // processSequence(input)
-    //   .then((result) => cb(null, result))
-    //   .catch((err) => cb(err));
+    const { seqHash, sequence } = input;
+    store.started(seqHash)
+      .then(() => processSequence(sequence))
+      .then((r) => store
+        .succeeded(seqHash, JSON.stringify(r))
+        .then(() => cb(null, r))
+      )
+      .catch((err) => store.failed(seqHash).then(() => cb(err)));
   },
   {
+    concurrent: 3,
     store: {
       type: "sqlite",
       path: path.resolve("./db.sqlite"),
@@ -27,8 +25,17 @@ const q = new Queue(
   }
 );
 
-function enqueue(sequence) {
-  q.push(sequence);
+async function enqueue(sequence) {
+  const seqHash = sha1(sequence);
+  const isNew = await store.create(seqHash);
+  const job = {
+    seqHash,
+    sequence,
+  };
+  if (isNew) {
+    q.push(job);
+  }
+  return job.seqHash;
 }
 
 module.exports = {
