@@ -2,14 +2,14 @@
   <section>
     <nav>
       <template
-        v-if="!uploading"
+        v-if="!analysing"
       >
         <button
           v-if="mode === 'data'"
           class="button--green"
           v-on:click="startUpload"
         >
-          Start Upload
+          Start Analysis
         </button>
       </template>
       <upload-another-file-button
@@ -42,7 +42,7 @@ export default {
     ...mapState({
       data: "data",
       mode: "mode",
-      uploading: "uploading",
+      analysing: "analysing",
     }),
   },
   methods: {
@@ -52,7 +52,7 @@ export default {
     startUpload() {
       const item = this.data.find((x) => x.status === "Pending");
       if (item) {
-        this.$store.dispatch("uploadOne", item.id)
+        this.$store.dispatch("analyse", item.id)
           .catch((error) => console.error(error))
           .then(() => {
             setTimeout(() => this.startUpload(), 0);

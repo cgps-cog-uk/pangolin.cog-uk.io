@@ -11,7 +11,7 @@ export const state = () => ({
   filter: null,
   formManifest: null,
   mode: "files",
-  uploading: false,
+  analysing: false,
 });
 
 export const mutations = {
@@ -27,13 +27,12 @@ export const mutations = {
       });
     }
     state.mode = "data";
-    state.uploading = false;
+    state.analysing = false;
   },
   reset(state) {
     state.mode = "files";
-    state.uploading = false;
+    state.analysing = false;
   },
-  setEntryStatus(state, { entryId, status, error, lineage }) {
   setEntryStatus(state, { entryId, status, error, lineage, bootstrap}) {
     const entry = state.data.find((x) => x.id === entryId);
     if (entry) {
@@ -49,8 +48,8 @@ export const mutations = {
   setMode(state, mode) {
     state.mode = mode;
   },
-  setUploading(state, mode) {
-    state.uploading = mode;
+  setAnalysing(state, mode) {
+    state.analysing = mode;
   },
 };
 
@@ -62,12 +61,9 @@ export const actions = {
     const entries = state.data.entries.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
-    for (const { name, taxon, taxId, lineage } of entries) {
     for (const { name, taxon, lineage, bootstrap } of entries) {
       const row = {
         "File name": name,
-        Taxon: taxon,
-        "Tax ID": taxId,
         Lineage: lineage,
         Bootstrap: bootstrap,
       };
@@ -78,11 +74,11 @@ export const actions = {
       "results.csv"
     );
   },
-  uploadOne({ commit, state }, entryId) {
+  analyse({ commit, state }, entryId) {
     const entry = state.data.find((x) => x.id === entryId);
     if (entry) {
-      commit("setUploading", true);
-      commit("setEntryStatus", { entryId, status: "Uploading" });
+      commit("setAnalysing", true);
+      commit("setEntryStatus", { entryId, status: "Analysing" });
       return (
         this.$axios({
           method: "POST",

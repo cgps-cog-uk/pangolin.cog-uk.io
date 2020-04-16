@@ -42,8 +42,8 @@
       </template>
       <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded, isMobile, headers }">
         <v-icon v-if="item.status === 'Pending'">mdi-timer-sand-empty</v-icon>
-        <v-icon v-else-if="item.status === 'Uploading'">mdi-progress-upload</v-icon>
-        <v-icon v-else-if="item.status === 'Uploaded'">mdi-check</v-icon>
+        <v-icon v-else-if="item.status === 'Analysing'">mdi-progress-upload</v-icon>
+        <v-icon v-else-if="item.status === 'Analysed'">mdi-check</v-icon>
         <v-icon
           v-else-if="item.status === 'Failed'"
           class="v-data-table__expand-icon"
@@ -121,7 +121,6 @@ export default {
   top: 64px;
   left: 0;
   right: 0;
-  bottom: 0;
   bottom: 50px;
   background-color: #fff;
   box-shadow: 0 12px 18px 2px rgba(34,0,51,.04),0 6px 22px 4px rgba(7,48,114,.12),0 6px 10px -4px rgba(14,13,26,.12);
