@@ -13,7 +13,7 @@ async function processFiles(files) {
 
   for (const file of files) {
     const fileTextContent = await readFile(file);
-    const lines =fileTextContent.replace(/\n\r/g, "\n").split("\n");
+    const lines = fileTextContent.replace(/\n\r/g, "\n").split("\n");
     for (const line of lines) {
       const trimmedLine = line.trim();
       if (trimmedLine && !trimmedLine.startsWith(";")) {
