@@ -15,7 +15,7 @@
           This website assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">article</a>
         </p>
         <p>
-          The software to assign lineages based on this algoritm was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>. The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
+          The software to assign lineages based on this algoritm was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a>, <a href="https://github.com/jtmccr1">JT McCrone</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>. The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
         </p>
       </div>
     </div>
