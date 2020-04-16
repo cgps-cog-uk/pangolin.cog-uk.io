@@ -4,7 +4,7 @@
       <header>
         <h1>
           <a href="/">
-            <img title="Pangolin" src="/images/pangolin.png">
+            <img title="Pangolin" src="/images/logo.png">
           </a>
         </h1>
         <nav>
@@ -88,7 +88,7 @@ header h1 a {
   text-decoration: none;
 }
 header img {
-  height: 16px;
+  height: 40px;
   margin-right: 8px;
 }
 
@@ -163,7 +163,7 @@ footer ul li a {
     margin: unset;
   }
   header img {
-    height: 32px;
+    height: 40px;
   }
   main {
     max-width: 64rem;

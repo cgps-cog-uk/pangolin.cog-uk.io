@@ -9,6 +9,7 @@
           <h2>
             Pangolin Lineage Assigner
           </h2>
+          <h4>phylogenetic assignment of named global outbreak lineages</h4>
           <p>
             You can upload one or more sequences by dragging and dropping the a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
           </p>
