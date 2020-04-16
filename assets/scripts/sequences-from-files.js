@@ -16,7 +16,7 @@ async function processFiles(files) {
     const lines = fileTextContent.replace(/\n\r/g, "\n").split("\n");
     for (const line of lines) {
       const trimmedLine = line.trim();
-      if (trimmedLine && !trimmedLine.startsWith(";")) {
+      if (trimmedLine) {
         if (trimmedLine.startsWith(">")) {
           sequences.push({ file: file.name, name: trimmedLine.slice(1), sequence: "" });
         }
