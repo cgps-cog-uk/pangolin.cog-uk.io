@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
   Promise.resolve(req.body)
     .then((sequenceAsString) => {
       // TODO: replace with queue.enqueue
-      console.log("Got request to process a fasta sequence", sequenceAsString);
+      // console.log("Got request to process a fasta sequence", sequenceAsString);
       const checksum = crypto.createHash("sha1");
       checksum.update((new Date()).valueOf().toString());
       checksum.update(Math.random().toString());
