@@ -122,7 +122,7 @@ export default {
     onDownloadRowsClick() {
       this.$store.dispatch(
         "downloadRows",
-        { status: "Failed" }
+        { status: "Success" }
       );
     },
     checkForResults() {
