@@ -57,7 +57,7 @@ class ResultsStore {
     return new Promise((resolve, reject) => {
       this._db.run(`UPDATE ${this._tableName} SET status = ?, result = ? WHERE seqId = ?`, [
         "succeeded",
-        result,
+        JSON.stringify(result),
         seqId,
       ], function (err) {
         if (err) return reject(err);
@@ -79,11 +79,11 @@ class ResultsStore {
     });
   }
 
-  async status(seqIds = []) {
+  async results(seqIds = []) {
     if (this._db === null) throw new Error("Need to connect store");
     const query = seqIds.length > 0 ?
-      [`SELECT seqId, status FROM ${this._tableName} WHERE seqId IN (${seqIds.map((_) => "?").join(", ")})`, seqIds] :
-      [`SELECT seqId, status FROM ${this._tableName}`];
+      [`SELECT seqId, status, result FROM ${this._tableName} WHERE seqId IN (${seqIds.map((_) => "?").join(", ")})`, seqIds] :
+      [`SELECT seqId, status, result FROM ${this._tableName}`];
 
     const statuses = {};
 
@@ -94,11 +94,15 @@ class ResultsStore {
       });
     });
 
-    for (const { seqId, status } of rows) {
-      statuses[seqId] = status;
+    for (const { seqId, status, result } of rows) {
+      try {
+        statuses[seqId] = { status, result: status === "succeeded" ? JSON.parse(result) : undefined };
+      } catch (err) {
+        statuses[seqId] = { status: "failed" }
+      }
     }
     for (const seqId of seqIds) {
-      statuses[seqId] = statuses[seqId] || "missing";
+      statuses[seqId] = statuses[seqId] || { status: "missing" };
     }
 
     return statuses;
