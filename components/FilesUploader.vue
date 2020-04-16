@@ -6,14 +6,16 @@
     <div>
       <div class="into">
         <h2>
-          COG-UK Sample Metadata Uploader
+          Pangolin Lineage Assigner
         </h2>
         <p>
-          You can upload batches of data using a spreadsheet by dragging and dropping the files or clicking “Select files to upload”.
+          You can upload one or more sequences by dragging and dropping the a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
         </p>
         <p>
-          You can create a spreadsheet file in Excel, Google Docs or other spreadsheet software.
-          Please use <a href="/api/downloads/template/biosamples" target="_blank">this template for uploading biosamples only</a>, or <a href="/api/downloads/template/all" target="_blank">this template for uploading biosamples with library and sequencing metadata</a>; do not edit, add, or remove any columns. This page supports CSV, Excel, ODF formats.
+          This website assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">article</a>
+        </p>
+        <p>
+          The software to assign lineages based on this algoritm was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>. The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
         </p>
       </div>
     </div>
