@@ -10,6 +10,7 @@ class ResultsStore {
   }
 
   connect() {
+    if (this._db !== null) return Promise.resolve("connected");
     return new Promise((resolve, reject) => {
       this._db = new sqlite.Database(this.dbPath, (err) => {
         if (err) return reject(err);

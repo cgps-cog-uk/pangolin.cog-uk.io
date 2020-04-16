@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const jwt = require("express-jwt");
 
 const config = require("./utils/config");
+const store = require("./utils/store");
 
 const app = express();
 
@@ -50,5 +51,8 @@ app.use(
     .unless({ path: [ "/api/auth/login" ] }),
   require("./routes")
 );
+
+app.on("listening", () => store.connect());
+app.on("close", () => store.close());
 
 module.exports = app;
