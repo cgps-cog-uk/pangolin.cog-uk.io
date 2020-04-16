@@ -57,13 +57,13 @@ export const getters = {
 };
 
 export const actions = {
-  downloadRows({ state }, { status = "Failed" }) {
-    const entries = state.data.entries.filter((x) => x.status === status);
+  downloadRows({ state }, { status = "Success" }) {
+    const entries = state.data.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
     for (const { name, taxon, lineage, bootstrap } of entries) {
       const row = {
-        "File name": name,
+        "Sequence name": name,
         Lineage: lineage,
         Bootstrap: bootstrap,
       };
