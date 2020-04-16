@@ -63,11 +63,13 @@ export const actions = {
     const rows = [];
     // eslint-disable-next-line no-unused-vars
     for (const { name, taxon, taxId, lineage } of entries) {
+    for (const { name, taxon, lineage, bootstrap } of entries) {
       const row = {
         "File name": name,
         Taxon: taxon,
         "Tax ID": taxId,
         Lineage: lineage,
+        Bootstrap: bootstrap,
       };
       rows.push(row);
     }
