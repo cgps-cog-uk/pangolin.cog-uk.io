@@ -30,6 +30,7 @@
     "merge-options": "^2.0.0",
     "moment": "^2.24.0",
     "nuxt": "^2.0.0",
+    "nuxt-vuex-localstorage": "^1.2.6",
     "papaparse": "^5.2.0",
     "sqlite3": "^4.1.1",
     "uuid": "^7.0.3",

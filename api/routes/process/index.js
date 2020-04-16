@@ -3,8 +3,13 @@ const express = require("express");
 const router = express.Router();
 
 router.use(
-  "/lineage",
-  require("./lineage")
+  "/submit",
+  require("./submit")
+);
+
+router.use(
+  "/result",
+  require("./result")
 );
 
 module.exports = router;

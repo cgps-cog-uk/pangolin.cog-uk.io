@@ -1,5 +1,9 @@
 <template>
   <div class="data-grid">
+    <nav>
+      <start-upload-button />
+      <upload-another-file-button />
+    </nav>
     <v-data-table
       v-model="selected"
       dense
@@ -71,17 +75,24 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
+
+import StartUploadButton from "~/components/StartUploadButton.vue";
+import UploadAnotherFileButton from "~/components/UploadAnotherFileButton.vue";
 
 export default {
+  components: {
+    StartUploadButton,
+    UploadAnotherFileButton,
+  },
   data() {
     return {
       selected: [],
     };
   },
   computed: {
-    ...mapState({
-      data: "data",
+    ...mapGetters({
+      data: "entries",
     }),
     headers() {
       return [
@@ -104,12 +115,23 @@ export default {
       ];
     },
   },
+  mounted() {
+    this.checkForResults();
+  },
   methods: {
     onDownloadRowsClick() {
       this.$store.dispatch(
         "downloadRows",
-        { status: "Failed" }
+        { status: "Success" }
       );
+    },
+    checkForResults() {
+      const shouldQuery = this.data.some((x) => x.status === "Analysing");
+      if (shouldQuery) {
+        this.$store.dispatch("queryResults")
+          .catch((error) => console.error(error));
+      }
+      setTimeout(() => this.checkForResults(), 30 * 1000);
     },
   },
 };
@@ -121,7 +143,7 @@ export default {
   top: 64px;
   left: 0;
   right: 0;
-  bottom: 50px;
+  bottom: 48px;
   background-color: #fff;
   box-shadow: 0 12px 18px 2px rgba(34,0,51,.04),0 6px 22px 4px rgba(7,48,114,.12),0 6px 10px -4px rgba(14,13,26,.12);
   padding: 8px;
@@ -145,6 +167,7 @@ tr.v-row-group__header:not(:first-child) td {
 }
 td.group-header {
   padding-left: 2px;
+  text-align: left;
 }
 
 .v-data-table >>> td {
@@ -188,5 +211,28 @@ tr.expanded-cells td.has-error strong {
   line-height: 14px;
   font-style: italic;
   padding-bottom: 4px;
+}
+
+nav {
+  position: fixed;
+  top: 32px;
+  left: 8px;
+  z-index: 1;
+}
+@media (max-width:768px) {
+  nav button,
+  nav label {
+    padding: 0 1px;
+    margin: 0;
+    border: 0;
+  }
+}
+@media (min-width:768px) {
+  nav {
+    position: fixed;
+    top: 11px;
+    right: 96px;
+    left: unset;
+  }
 }
 </style>
