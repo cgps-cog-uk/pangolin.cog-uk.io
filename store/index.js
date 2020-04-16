@@ -39,6 +39,7 @@ export const mutations = {
     if (entry) {
       entry.status = status;
       entry.lineage = lineage;
+      entry.bootstrap = bootstrap;
       entry.error = error;
       if (status === "Success") {
         entry.sequence = null;
