@@ -10,12 +10,12 @@ module.exports = function (req, res, next) {
 
   Promise.resolve(req.body)
     .then(processSequence)
-    .then(({ taxon, tax_id, lineage }) => {
+    .then(({ taxon, lineage, UFbootstrap }) => {
       res.send({
         success: true,
         taxon,
-        taxId: tax_id,
         lineage,
+        bootstrap: UFbootstrap,
       });
     })
     .catch(next);

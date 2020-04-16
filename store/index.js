@@ -34,6 +34,7 @@ export const mutations = {
     state.uploading = false;
   },
   setEntryStatus(state, { entryId, status, error, lineage }) {
+  setEntryStatus(state, { entryId, status, error, lineage, bootstrap}) {
     const entry = state.data.find((x) => x.id === entryId);
     if (entry) {
       entry.status = status;
@@ -95,6 +96,7 @@ export const actions = {
                 entryId,
                 status,
                 lineage: response.lineage,
+                bootstrap: response.bootstrap,
               }
             );
           })
