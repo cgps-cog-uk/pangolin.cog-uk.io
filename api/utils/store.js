@@ -94,15 +94,32 @@ class ResultsStore {
       });
     });
 
-    for (const { seqId, status, result } of rows) {
+    for (const { seqId, status, result: rawResult } of rows) {
       try {
-        statuses[seqId] = { status, result: status === "succeeded" ? JSON.parse(result) : undefined };
+        const result = rawResult ? JSON.parse(rawResult) : {};
+        statuses[seqId] = {
+          id: seqId,
+          done: status in ["succeeded", "failed"],
+          success: status === "succeeded",
+          error: status === "failed" ? "Processing error" : null,
+          ...result,
+        };
       } catch (err) {
-        statuses[seqId] = { status: "failed" }
+        statuses[seqId] = {
+          id: seqId,
+          done: true,
+          success: false,
+          error: "Parsing error",
+        };
       }
     }
     for (const seqId of seqIds) {
-      statuses[seqId] = statuses[seqId] || { status: "missing" };
+      statuses[seqId] = statuses[seqId] || {
+        id: seqId,
+        done: false,
+        success: false,
+        error: "Missing",
+      };
     }
 
     return statuses;
