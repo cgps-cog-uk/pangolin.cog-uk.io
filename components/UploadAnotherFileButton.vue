@@ -1,9 +1,10 @@
 <template>
   <label
+    class="button--grey"
     for="file-upload"
     role="button"
   >
-    <slot />
+    Upload another file
     <input
       id="file-upload"
       ref="file-input"
