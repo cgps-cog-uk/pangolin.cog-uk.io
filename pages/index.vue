@@ -7,7 +7,7 @@
         <button
           v-if="mode === 'data'"
           class="button--green"
-          v-on:click="startUpload"
+          v-on:click="startAnalysis"
         >
           Start Analysis
         </button>
@@ -49,13 +49,13 @@ export default {
     setFilter(filter) {
       this.$store.commit("setFilter", filter);
     },
-    startUpload() {
+    startAnalysis() {
       const item = this.data.find((x) => x.status === "Pending");
       if (item) {
         this.$store.dispatch("analyse", item.id)
           .catch((error) => console.error(error))
           .then(() => {
-            setTimeout(() => this.startUpload(), 0);
+            setTimeout(() => this.startAnalysis(), 0);
           });
       }
     },
