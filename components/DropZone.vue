@@ -4,7 +4,7 @@
     class="upload-files"
   >
     <div class="label-1">
-      Drag and drop files
+      Drag and drop fasta file
     </div>
     <input
       id="file-upload"
@@ -15,10 +15,10 @@
     >
     <label
       role="button"
-      title="Select files to upload"
+      title="Select fasta file to upload"
       for="file-upload"
     >
-      Select files to upload
+      Select fasta file to upload
     </label>
     <p>{{ message }}</p>
   </div>
