@@ -9,7 +9,14 @@
           <h2>
             Pangolin Lineage Assigner
           </h2>
-          <h4>phylogenetic assignment of named global outbreak lineages</h4>
+          <div class="columns">
+            <div class="full-title">
+              <h3>Phylogenetic Assignment of Named Global Outbreak LINeages</h3>
+            </div>
+            <div class="logo">
+              <img title="Pangolin" src="/images/logo.png">
+            </div>
+          </div>
           <p>
             You can upload one or more sequences by dragging and dropping the a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
           </p>
@@ -55,6 +62,18 @@ export default {
 .into p {
   line-height: 1.75;
   margin-top: 16px;
+}
+
+.columns > div.full-title {
+  width:auto;
+}
+
+.columns > div.logo {
+  width:85px;
+}
+
+.columns > div.logo img { 
+  height: 80px;
 }
 
 @media (min-width:768px) {
