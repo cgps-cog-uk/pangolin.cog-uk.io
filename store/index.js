@@ -49,18 +49,16 @@ export const mutations = {
     }
   },
   updateResults(state, results) {
-    for (const result of results) {
-      if (result.done) {
-        const entry = state.data.entries.find((x) => x.jobId === result.id);
-        if (entry) {
-          entry.status = result.success ? "Success" : "Failed";
-          if (result.success) {
-            entry.lineage = result.lineage;
-            entry.bootstrap = result.bootstrap;
-          }
-          else {
-            entry.error = result.error;
-          }
+    for (const entry of state.data.entries) {
+      const result = results[entry.jobId];
+      if (result && result.done) {
+        entry.status = result.success ? "Success" : "Failed";
+        if (result.success) {
+          entry.lineage = result.lineage;
+          entry.bootstrap = result.bootstrap;
+        }
+        else {
+          entry.error = result.error;
         }
       }
     }
