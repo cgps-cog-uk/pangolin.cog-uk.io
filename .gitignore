@@ -91,3 +91,4 @@ sw.*
 
 !.vscode*
 *.code-workspace
+db.sqlite
