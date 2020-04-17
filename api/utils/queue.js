@@ -1,6 +1,7 @@
 const path = require("path");
 const Queue = require("better-queue");
 
+const config = require("./config");
 const processSequence = require("./process-sequence");
 const store = require("./store");
 const sha1 = require("./hash-sequence");
@@ -20,7 +21,7 @@ const q = new Queue(
     }
   },
   {
-    concurrent: 3,
+    concurrent: config.concurrent,
     store: {
       type: "sqlite",
       path: path.resolve("./db.sqlite"),
