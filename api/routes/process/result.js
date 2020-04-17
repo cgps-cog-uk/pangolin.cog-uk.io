@@ -5,8 +5,8 @@ module.exports = async function (req, res, next) {
 
   try {
     const ids = req.body;
-    const results = await store.results([ids]);
-    return res.send(Object.values(results));
+    const results = await store.results(ids);
+    return res.send(ids.map((_) => results[_]));
   } catch (err) {
     return next(err);
   }

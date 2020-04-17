@@ -97,12 +97,14 @@ class ResultsStore {
     for (const { seqId, status, result: rawResult } of rows) {
       try {
         const result = rawResult ? JSON.parse(rawResult) : {};
+        const { lineage, UFbootstrap: bootstrap } = result;
         statuses[seqId] = {
           id: seqId,
-          done: status in ["succeeded", "failed"],
+          done: ["succeeded", "failed"].includes(status),
           success: status === "succeeded",
           error: status === "failed" ? "Processing error" : null,
-          ...result,
+          lineage,
+          bootstrap,
         };
       } catch (err) {
         statuses[seqId] = {
