@@ -23,12 +23,16 @@
       <footer>
         <span>
           Logged in as <strong>{{ $auth.user.username }}</strong>
+          <a href="/logout">
+              Log out
+          </a>
         </span>
         <ul>
           <li>
-            <a href="/logout">
-              Log out
-            </a>
+            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Website by 
+          </li>
+          <li>
+            <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
           </li>
         </ul>
       </footer>
@@ -147,10 +151,14 @@ footer ul {
 footer ul li {
   margin: .25rem 0;
 }
-footer ul li a {
-  color: inherit;
+footer a {
+  color: #673c90;
   text-decoration: none;
   background-color: initial;
+}
+
+footer ul li img {
+  height: 24px;
 }
 
 @media (min-width:768px) {
@@ -188,7 +196,7 @@ footer ul li a {
     align-items: center;
   }
   footer ul li {
-    margin: .5rem;
+    margin: .25rem;
   }
 }
 </style>
