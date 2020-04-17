@@ -1,102 +1,103 @@
-const sqlite = require("sqlite3").verbose();
 const { join, resolve } = require("path");
+
+const Sequelize = require("sequelize");
+
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: resolve(join(__dirname, "..", "..", "db.sqlite")),
+});
+
+const Result = sequelize.define("result", {
+  seqId: {
+    type: Sequelize.STRING,
+    unique: true,
+    primaryKey: true,
+  },
+  result: {
+    type: Sequelize.STRING,
+    get() {
+      const r = this.getDataValue("result");
+      if (!r) return {};
+      return JSON.parse(r);
+    },
+    set(val) {
+      this.setDataValue("result", JSON.stringify(val));
+    },
+  },
+  status: Sequelize.ENUM("created", "started", "succeeded", "failed"),
+});
 
 class ResultsStore {
   constructor(options) {
-    const { tableName = "results" } = options || {};
-    this.dbPath = resolve(join(__dirname, "..", "..", "db.sqlite"));
-    this._tableName = tableName;
-    this._db = null;
+    this.connection = null;
   }
 
   connect() {
-    if (this._db !== null) return this._db;
-    this._db = new Promise((resolve, reject) => {
-      const db = new sqlite.Database(this.dbPath, (err) => {
-        if (err) return reject(err);
-        db.exec(`
-          CREATE TABLE IF NOT EXISTS ${this._tableName} (seqId TEXT UNIQUE, result TEXT, status TEXT, createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-          PRAGMA synchronous=OFF;
-          PRAGMA journal_mode=MEMORY;
-          PRAGMA temp_store=MEMORY;
-          `, (err2) => {
-          if (err2) return reject(err2);
-          resolve(db);
-        });
-      });
+    if (this.connection === null) {
+      this.connection = Result.sync();
+    }
+    return this.connection;
+  }
+
+  async create(seqId) {
+    await this.connect();
+    try {
+      await Result.create({ seqId, status: "created" });
+      return true; // created
+    } catch (err) {
+      return false;
+    }
+  }
+
+  async started(seqId) {
+    await this.connect();
+    return Result.update({
+      status: "started",
+    }, {
+      where: {
+        seqId,
+        status: ["pending", "failed"],
+      },
     });
-    return this._db;
   }
 
-  create(seqId) {
-    return this.connect().then((db) => new Promise((resolve, reject) => {
-      db.run(`INSERT OR IGNORE INTO ${this._tableName}(seqId, status) VALUES (?, ?)`, [
+  async succeeded(seqId, result) {
+    await this.connect();
+    return Result.update({
+      status: "succeeded",
+      result,
+    }, {
+      where: {
         seqId,
-        "pending",
-      ], function (err) {
-        if (err) return reject(err);
-        resolve(this.lastID > 0);
-      });
-    })
-    );
-
+      },
+    });
   }
 
-  started(seqId) {
-    return this.connect().then((db) => new Promise((resolve, reject) => {
-      db.run(`UPDATE ${this._tableName} SET status = ? WHERE seqId = ? AND status IN ("pending", "failed")`, [
-        "started",
+  async failed(seqId) {
+    await this.connect();
+    return Result.update({
+      status: "failed",
+    }, {
+      where: {
         seqId,
-      ], function (err) {
-        if (err) return reject(err);
-        resolve(this.changes > 0);
-      });
-    }));
-  }
-
-  succeeded(seqId, result) {
-    return this.connect().then((db) => new Promise((resolve, reject) => {
-      db.run(`UPDATE ${this._tableName} SET status = ?, result = ? WHERE seqId = ?`, [
-        "succeeded",
-        JSON.stringify(result),
-        seqId,
-      ], function (err) {
-        if (err) return reject(err);
-        resolve(this.changes > 0);
-      });
-    }));
-  }
-
-  failed(seqId) {
-    return this.connect().then((db) => new Promise((resolve, reject) => {
-      db.run(`UPDATE ${this._tableName} SET status = ? WHERE seqId = ? AND status = "started"`, [
-        "failed",
-        seqId,
-      ], function (err) {
-        if (err) return reject(err);
-        resolve(this.changes > 0);
-      });
-    }));
+        status: "started",
+      },
+    });
   }
 
   async results(seqIds = []) {
-    const db = await this.connect();
-    const query = seqIds.length > 0 ?
-      [`SELECT seqId, status, result FROM ${this._tableName} WHERE seqId IN (${seqIds.map((_) => "?").join(", ")})`, seqIds] :
-      [`SELECT seqId, status, result FROM ${this._tableName}`];
+    await this.connect();
+    const rows = await Result.findAll({
+      attributes: ["seqId", "status", "result"],
+      where: {
+        seqId: [...seqIds],
+      },
+    });
 
     const statuses = {};
 
-    const rows = await new Promise((resolve, reject) => {
-      db.all(...query, (err, r) => {
-        if (err) return reject(err);
-        resolve(r);
-      });
-    });
-
-    for (const { seqId, status, result: rawResult } of rows) {
+    for (const { seqId, status, result } of rows) {
       try {
-        const result = rawResult ? JSON.parse(rawResult) : {};
         const { lineage, UFbootstrap: bootstrap } = result;
         statuses[seqId] = {
           id: seqId,
@@ -125,15 +126,6 @@ class ResultsStore {
     }
 
     return statuses;
-  }
-
-  close() {
-    return this.connect().then((db) => new Promise((resolve, reject) => {
-      db.close((err) => {
-        if (err) return reject(err);
-        resolve("closed");
-      });
-    }));
   }
 }
 
