@@ -1,7 +1,8 @@
 <template>
   <div class="data-grid">
     <nav>
-      <start-upload-button />
+      <reset-button />
+      <start-analysis-button />
       <upload-another-file-button />
     </nav>
     <v-data-table
@@ -77,13 +78,15 @@
 <script>
 import { mapGetters } from "vuex";
 
-import StartUploadButton from "~/components/StartUploadButton.vue";
+import StartAnalysisButton from "~/components/StartAnalysisButton.vue";
 import UploadAnotherFileButton from "~/components/UploadAnotherFileButton.vue";
+import ResetButton from "~/components/ResetButton.vue";
 
 export default {
   components: {
-    StartUploadButton,
+    StartAnalysisButton,
     UploadAnotherFileButton,
+    ResetButton,
   },
   data() {
     return {

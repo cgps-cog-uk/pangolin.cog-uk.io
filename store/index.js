@@ -34,6 +34,7 @@ export const mutations = {
   reset(state) {
     state.mode = "files";
     state.analysing = false;
+    state.data.entries = [];
   },
   setEntryStatus(state, { entryId, status, error, jobId }) {
     const entry = state.data.entries.find((x) => x.id === entryId);
@@ -149,5 +150,8 @@ export const actions = {
       );
     }
     return Promise.resolve();
+  },
+  resetState({ commit }) {
+    commit("reset");
   },
 };
