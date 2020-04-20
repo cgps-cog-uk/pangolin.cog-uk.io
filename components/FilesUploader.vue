@@ -16,7 +16,7 @@
             </div>
           </div>
           <p>
-            You can upload one or more sequences by dragging and dropping the a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
+            You can upload one or more sequences by dragging and dropping a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
           </p>
           <p>
             This Web Application assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">article</a>
