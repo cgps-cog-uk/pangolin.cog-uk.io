@@ -6,11 +6,9 @@
       </div>
       <div>
         <div class="into">
-          <h2>
-            Pangolin Lineage Assigner
-          </h2>
           <div class="columns">
             <div class="full-title">
+              <h2>Pangolin</h2>
               <h3>Phylogenetic Assignment of Named Global Outbreak LINeages</h3>
             </div>
             <div class="logo">
@@ -21,7 +19,7 @@
             You can upload one or more sequences by dragging and dropping the a (multi)fasta file or clicking “Select files to upload” and selecting a (multi)fasta file.
           </p>
           <p>
-            This website assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">article</a>
+            This Web Application assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">article</a>
           </p>
           <p>
             The software to assign lineages based on this algoritm was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a>, <a href="https://github.com/jtmccr1">JT McCrone</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>. The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
@@ -73,7 +71,7 @@ export default {
 }
 
 .columns > div.logo img { 
-  height: 80px;
+  height: 96px;
 }
 
 @media (min-width:768px) {
