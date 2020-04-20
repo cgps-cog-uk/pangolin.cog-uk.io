@@ -8,7 +8,7 @@
         <div class="into">
           <div class="columns">
             <div class="full-title">
-              <h2>Pangolin</h2>
+              <h2>Pangolin COVID-19<br>Lineage Assigner</h2>
               <h3>Phylogenetic Assignment of Named Global Outbreak LINeages</h3>
             </div>
             <div class="logo">
@@ -71,7 +71,7 @@ export default {
 }
 
 .columns > div.logo img { 
-  height: 96px;
+  height: 120px;
 }
 
 @media (min-width:768px) {
