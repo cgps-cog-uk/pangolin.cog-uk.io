@@ -4,7 +4,7 @@
     class="button--pangolin-red"
     v-on:click="startAnalysis"
   >
-    Start Analysis
+    Start analysis
   </button>
 </template>
 

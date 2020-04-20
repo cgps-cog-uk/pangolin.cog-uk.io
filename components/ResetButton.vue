@@ -4,7 +4,7 @@
     class="button--pangolin-blue"
     v-on:click="resetEntries"
   >
-    Reset Entries
+    Reset entries
   </button>
 </template>
 
