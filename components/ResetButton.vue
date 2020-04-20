@@ -1,7 +1,7 @@
 <template>
   <button
     v-if="hasEntries"
-    class="button--green"
+    class="button--pangolin-blue"
     v-on:click="resetEntries"
   >
     Reset Entries

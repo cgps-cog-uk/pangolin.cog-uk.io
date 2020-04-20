@@ -1,6 +1,6 @@
 <template>
   <label
-    class="button--grey"
+    class="button--pangolin-blue"
     for="file-upload"
     role="button"
   >

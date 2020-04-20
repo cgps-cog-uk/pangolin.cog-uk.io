@@ -1,8 +1,8 @@
 <template>
   <div class="data-grid">
     <nav>
-      <reset-button />
       <start-analysis-button />
+      <reset-button />
       <upload-another-file-button />
     </nav>
     <v-data-table
@@ -33,7 +33,7 @@
               {{ isOpen ? "mdi-minus" : "mdi-plus" }}
             </v-icon>
           </v-btn>
-          {{ group.toUpperCase() }}: {{ items.length }} {{ items.length === 1 ? "row" : "rows" }}
+          {{ group === "Pending" ? "Ready for Analysis" : group.toUpperCase() }}: {{ items.length }} {{ items.length === 1 ? "row" : "rows" }}
           <template v-if="group === 'Success'">
             <v-btn
               icon
@@ -175,6 +175,7 @@ td.group-header {
 
 .v-data-table >>> td {
   border: 1px solid transparent;
+  text-align: left;
 }
 
 tr.expanded,
@@ -218,7 +219,7 @@ tr.expanded-cells td.has-error strong {
 
 nav {
   position: fixed;
-  top: 32px;
+  top: 40px;
   left: 8px;
   z-index: 1;
 }
@@ -234,8 +235,8 @@ nav {
   nav {
     position: fixed;
     top: 11px;
-    right: 96px;
-    left: unset;
+    left: 88px;
+    right: unset;
   }
 }
 </style>

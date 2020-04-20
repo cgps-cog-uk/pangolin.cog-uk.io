@@ -1,7 +1,7 @@
 <template>
   <button
     v-if="hasPendingEntries"
-    class="button--green"
+    class="button--pangolin-red"
     v-on:click="startAnalysis"
   >
     Start Analysis

@@ -11,7 +11,7 @@
           <a
             href="https://pangolin.docs.cog-uk.io"
             target="_blank"
-            class="button--grey"
+            class="button--pangolin-brown"
           >
             Help
           </a>
@@ -29,7 +29,7 @@
         </span>
         <ul>
           <li>
-            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Website by 
+            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by 
           </li>
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
@@ -92,7 +92,7 @@ header h1 a {
   text-decoration: none;
 }
 header img {
-  height: 40px;
+  height: 32px;
   margin-right: 8px;
 }
 
@@ -152,7 +152,7 @@ footer ul li {
   margin: .25rem 0;
 }
 footer a {
-  color: #673c90;
+  color: #8C4240;
   text-decoration: none;
   background-color: initial;
 }

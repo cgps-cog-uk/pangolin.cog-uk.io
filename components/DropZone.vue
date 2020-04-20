@@ -144,7 +144,7 @@ input[type="text"]:focus {
 }
 
 label {
-  background-color:#0060df;
+  background-color:#757289;
   color:#fff;
   cursor: pointer;
   padding: 16px 24px;
