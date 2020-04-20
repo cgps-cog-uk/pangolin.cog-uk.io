@@ -60,6 +60,14 @@ export default {
   ],
 
   /*
+  ** Auth module configuration
+  ** See https://auth.nuxtjs.org/options
+  */
+  auth: {
+    localStorage: false,
+  },
+
+  /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
