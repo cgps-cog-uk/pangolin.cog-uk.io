@@ -1,6 +1,7 @@
 const { join, resolve } = require("path");
 
 const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -56,7 +57,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
-        status: ["pending", "failed"],
+        status: { [Op.ne]: "succeeded" },
       },
     });
   }
@@ -80,7 +81,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
-        status: "started",
+        status: { [Op.ne]: "succeeded" },
       },
     });
   }
