@@ -11,7 +11,7 @@ const q = new Queue(
     const { id: seqHash, sequence } = input;
     try {
       await store.started(seqHash);
-      const result = await processSequence(sequence);
+      const result = await processSequence(seqHash, sequence);
       await store.succeeded(seqHash, result);
       return cb(null, { id: seqHash, result });
     } catch (err) {
