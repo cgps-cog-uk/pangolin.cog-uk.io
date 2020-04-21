@@ -29,6 +29,7 @@ const q = new Queue(
       type: "sqlite",
       path: path.resolve("./queue.sqlite"),
     },
+    maxRetries: 3,
   }
 );
 

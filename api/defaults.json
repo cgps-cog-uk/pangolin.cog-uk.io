@@ -1,5 +1,6 @@
 {
   "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v6",
   "secret": "-",
-  "concurrent": 3
+  "concurrent": 3,
+  "timeout": 120000
 }

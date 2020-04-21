@@ -4,7 +4,7 @@ const config = require("./config");
 module.exports = function (seqHash, sequenceText) {
   return new Promise((resolve, reject) => {
     const startTime = process.hrtime();
-    const container = docker(config.imageName);
+    const container = docker(config.imageName, {}, config.timeout);
 
     const buffer = [];
     container.stdout.on("data", (data) => {
