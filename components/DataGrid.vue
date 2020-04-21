@@ -113,11 +113,11 @@ export default {
         },
         {
           value: "bootstrap",
-          text: "Bootstrap",
+          text: "Bootstrap support value",
         },
         {
           value: "shalrt",
-          text: "SH-aLRT",
+          text: "SH-aLRT support value",
         },
       ];
     },
