@@ -34,14 +34,12 @@ const q = new Queue(
 
 async function enqueue(sequence) {
   const seqHash = sha1(sequence);
-  const isNew = await store.create(seqHash);
+  await store.create(seqHash);
   const job = {
     id: seqHash,
     sequence,
   };
-  if (isNew) {
-    q.push(job);
-  }
+  q.push(job);
   return job.id;
 }
 
