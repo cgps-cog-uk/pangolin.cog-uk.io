@@ -86,6 +86,11 @@ class ResultsStore {
     });
   }
 
+  async fetchOne(seqId) {
+    await this.connect();
+    return Result.findOne({ attributes: ["status", "result"], where: { seqId } });
+  }
+
   async results(seqIds = []) {
     await this.connect();
     const rows = await Result.findAll({
