@@ -46,7 +46,15 @@ class ResultsStore {
       await Result.create({ seqId, status: "created" });
       return true; // created
     } catch (err) {
-      return false;
+      await Result.update({
+        status: "created",
+      }, {
+        where: {
+          seqId,
+          status: { [Op.notIn]: ["succeeded", "started"] },
+        },
+      });
+      return false; // updated
     }
   }
 
