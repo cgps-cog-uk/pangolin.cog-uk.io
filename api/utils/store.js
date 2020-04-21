@@ -1,6 +1,7 @@
 const { join, resolve } = require("path");
 
 const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
@@ -45,7 +46,15 @@ class ResultsStore {
       await Result.create({ seqId, status: "created" });
       return true; // created
     } catch (err) {
-      return false;
+      await Result.update({
+        status: "created",
+      }, {
+        where: {
+          seqId,
+          status: { [Op.notIn]: ["succeeded", "started"] },
+        },
+      });
+      return false; // updated
     }
   }
 
@@ -56,7 +65,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
-        status: ["pending", "failed"],
+        status: { [Op.ne]: "succeeded" },
       },
     });
   }
@@ -80,9 +89,14 @@ class ResultsStore {
     }, {
       where: {
         seqId,
-        status: "started",
+        status: { [Op.ne]: "succeeded" },
       },
     });
+  }
+
+  async fetchOne(seqId) {
+    await this.connect();
+    return Result.findOne({ attributes: ["status", "result"], where: { seqId } });
   }
 
   async results(seqIds = []) {
