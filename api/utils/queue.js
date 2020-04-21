@@ -27,7 +27,7 @@ const q = new Queue(
     concurrent: config.concurrent,
     store: {
       type: "sqlite",
-      path: path.resolve("./db.sqlite"),
+      path: path.resolve("./queue.sqlite"),
     },
   }
 );
