@@ -1,5 +1,5 @@
 {
-  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v4",
+  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v6",
   "secret": "-",
   "concurrent": 3
 }

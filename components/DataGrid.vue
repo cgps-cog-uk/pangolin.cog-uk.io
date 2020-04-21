@@ -115,6 +115,10 @@ export default {
           value: "bootstrap",
           text: "Bootstrap",
         },
+        {
+          value: "shalrt",
+          text: "SH-aLRT",
+        },
       ];
     },
   },
