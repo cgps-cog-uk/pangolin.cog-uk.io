@@ -46,7 +46,15 @@ class ResultsStore {
       await Result.create({ seqId, status: "created" });
       return true; // created
     } catch (err) {
-      return false;
+      await Result.update({
+        status: "created",
+      }, {
+        where: {
+          seqId,
+          status: { [Op.notIn]: ["succeeded", "started"] },
+        },
+      });
+      return false; // updated
     }
   }
 
@@ -84,6 +92,11 @@ class ResultsStore {
         status: { [Op.ne]: "succeeded" },
       },
     });
+  }
+
+  async fetchOne(seqId) {
+    await this.connect();
+    return Result.findOne({ attributes: ["status", "result"], where: { seqId } });
   }
 
   async results(seqIds = []) {
