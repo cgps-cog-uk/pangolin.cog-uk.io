@@ -98,13 +98,14 @@ class ResultsStore {
 
     for (const { seqId, status, result } of rows) {
       try {
-        const { lineage, UFbootstrap: bootstrap } = result;
+        const { lineage, "SH-alrt": shalrt, UFbootstrap: bootstrap } = result;
         statuses[seqId] = {
           id: seqId,
           done: ["succeeded", "failed"].includes(status),
           success: status === "succeeded",
           error: status === "failed" ? "Processing error" : null,
           lineage,
+          shalrt,
           bootstrap,
         };
       } catch (err) {
