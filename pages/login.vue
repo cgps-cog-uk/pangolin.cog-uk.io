@@ -44,10 +44,11 @@
                   outlined
                 /> -->
                 <v-btn
-                  depressed
-                  large
                   block
                   color="primary"
+                  depressed
+                  large
+                  type="submit"
                   v-on:click="login"
                 >
                   {{ loginLabel }}
@@ -111,7 +112,8 @@ export default {
     },
   },
   methods: {
-    login() {
+    login($event) {
+      $event.preventDefault();
       if (this.isFormValid) {
         this.mode = "sending";
         const data = {
