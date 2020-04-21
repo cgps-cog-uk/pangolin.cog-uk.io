@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: resolve(join(__dirname, "..", "..", "db.sqlite")),
+  storage: resolve(join(__dirname, "..", "..", "results.sqlite")),
 });
 
 const Result = sequelize.define("result", {
