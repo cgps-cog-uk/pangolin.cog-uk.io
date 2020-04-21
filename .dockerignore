@@ -1,0 +1,4 @@
+db.sqlite
+files/
+node_modules/
+.git/

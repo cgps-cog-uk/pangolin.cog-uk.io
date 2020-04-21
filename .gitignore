@@ -91,4 +91,5 @@ sw.*
 
 !.vscode*
 *.code-workspace
-db.sqlite
+*.sqlite
+scratch*
