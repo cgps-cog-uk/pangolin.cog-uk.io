@@ -45,10 +45,22 @@
           </template>
         </td>
       </template>
-      <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded, isMobile, headers }">
-        <v-icon v-if="item.status === 'Pending'">mdi-timer-sand-empty</v-icon>
-        <v-icon v-else-if="item.status === 'Analysing'">mdi-progress-upload</v-icon>
-        <v-icon v-else-if="item.status === 'Analysed'">mdi-check</v-icon>
+      <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded}">
+        <v-icon v-if="item.status === 'Pending'">
+          mdi-timer-sand-empty
+        </v-icon>
+        <v-icon v-else-if="item.status === 'Analysing'">
+          mdi-loading mdi-spin
+        </v-icon>
+        <v-icon
+          v-else-if="item.status === 'Success'"
+          class="v-data-table__expand-icon"
+          v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
+          title="Click to see global lineage info."
+          v-on:click="expand(!isExpanded)"
+        >
+          {{ isExpanded ? "mdi-check-circle" : "mdi-check" }}
+        </v-icon>
         <v-icon
           v-else-if="item.status === 'Failed'"
           class="v-data-table__expand-icon"
@@ -60,13 +72,29 @@
         </v-icon>
       </template>
       <template v-slot:expanded-item="{ headers, item }">
+        <td v-if="!item.error" colspan="3" />
+        <td v-if="!item.error">
+          <strong>Most common countries: </strong>
+          {{ item.mostCommonCountries }}
+          <br>
+          <strong>Number of taxa: </strong>
+          {{ item.numberTaxa }}
+          <br>
+          <strong>Date range: </strong>
+          {{ item.dateRange }}
+          <br>
+          <strong>Days since last sampling: </strong>
+          {{ item.daysSinceLastSampling }}
+        </td>
         <td
-          class="text-start"
+          v-if="!item.error"
+          v-bind:colspan="headers.length - 4"
+        />
+        <td
+          v-if="item.error"
           v-bind:colspan="headers.length"
         >
-          <strong
-            v-if="item.error"
-          >
+          <strong>
             {{ item.error }}
           </strong>
         </td>

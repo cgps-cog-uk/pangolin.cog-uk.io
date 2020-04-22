@@ -112,15 +112,26 @@ class ResultsStore {
 
     for (const { seqId, status, result } of rows) {
       try {
-        const { lineage, "SH-alrt": shalrt, UFbootstrap: bootstrap } = result;
+        const { lineage,
+          "SH-alrt": shalrt,
+          UFbootstrap: bootstrap,
+          "Most common countries": mostCommonCountries,
+          "Date range": dateRange,
+          "Number of taxa": numberTaxa,
+          "Days since last sampling": daysSinceLastSampling,
+        } = result;
         statuses[seqId] = {
           id: seqId,
           done: ["succeeded", "failed"].includes(status),
           success: status === "succeeded",
-          error: status === "failed" ? "Processing error" : null,
+          error: status === "failed" ? "Sequence unable to be processed with Pangolin" : null,
           lineage,
           shalrt,
           bootstrap,
+          mostCommonCountries,
+          dateRange,
+          numberTaxa,
+          daysSinceLastSampling,
         };
       } catch (err) {
         statuses[seqId] = {

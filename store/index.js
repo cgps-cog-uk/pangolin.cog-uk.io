@@ -58,6 +58,10 @@ export const mutations = {
           entry.lineage = result.lineage;
           entry.bootstrap = result.bootstrap;
           entry.shalrt = result.shalrt;
+          entry.mostCommonCountries = result.mostCommonCountries;
+          entry.numberTaxa = result.numberTaxa;
+          entry.dateRange = result.dateRange;
+          entry.daysSinceLastSampling = result.daysSinceLastSampling;
         }
         else {
           entry.error = result.error;
