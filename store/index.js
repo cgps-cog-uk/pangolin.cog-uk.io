@@ -82,12 +82,25 @@ export const actions = {
     const entries = getters.entries.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
-    for (const { name, lineage, bootstrap, shalrt } of entries) {
+    for (const {
+      name,
+      lineage,
+      bootstrap,
+      shalrt,
+      mostCommonCountries,
+      numberTaxa,
+      dateRange,
+      daysSinceLastSampling,
+    } of entries) {
       const row = {
         "Sequence name": name,
         Lineage: lineage,
         Bootstrap: bootstrap,
         "SH-aLRT": shalrt,
+        "Most common countries": mostCommonCountries,
+        "Number of taxa": numberTaxa,
+        "Date range": dateRange,
+        "Days since last sampling": daysSinceLastSampling,
       };
       rows.push(row);
     }
