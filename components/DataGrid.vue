@@ -33,7 +33,7 @@
               {{ isOpen ? "mdi-minus" : "mdi-plus" }}
             </v-icon>
           </v-btn>
-          {{ group === "Pending" ? "Ready for Analysis" : group.toUpperCase() }}: {{ items.length }} {{ items.length === 1 ? "row" : "rows" }}
+          {{ groupTitle(group, items) }}
           <template v-if="group === 'Success'">
             <v-btn
               icon
@@ -167,6 +167,23 @@ export default {
           .catch((error) => console.error(error));
       }
       setTimeout(() => this.checkForResults(), 30 * 1000);
+    },
+    groupTitle(group, items) {
+      let heading;
+      if (group === "Pending") {
+        heading = "READY FOR ANALYSIS";
+      } else if (group === "Success") {
+        heading = "ANALYSED (Click tick for more info)";
+      } else {
+        heading = group.toUpperCase();
+      }
+      let rowSuffix;
+      if (items.length === 1) {
+        rowSuffix = " row";
+      } else {
+        rowSuffix = " rows";
+      }
+      return [heading, items.length, rowSuffix].join(" ");
     },
   },
 };
