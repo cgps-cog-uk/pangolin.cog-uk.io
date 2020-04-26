@@ -17,7 +17,6 @@
       show-expand
       single-expand
       v:bind-show-select="false"
-      v-on:click:row="rowClick"
     >
       <template v-slot:group.header="{ group, groupBy, items, headers, isOpen, toggle }">
         <td
@@ -72,6 +71,20 @@
           {{ isExpanded ? "mdi-alert-circle" : "mdi-alert-circle-outline" }}
         </v-icon>
       </template>
+      <template v-slot:item.lineage="{ item }">
+        <a
+          v-if="item.lineage && item.lineage !== 'None'"
+          v-bind:href="`${lineageLink}${item.lineage}`"
+          target="_blank"
+          rel="noopener"
+          title="View lineage in Microreact"
+        >
+          {{ item.lineage }}
+        </a>
+        <template v-else>
+          {{ item.lineage }}
+        </template>
+      </template>
       <template v-slot:expanded-item="{ headers, item }">
         <td v-if="!item.error" colspan="3" />
         <td v-if="!item.error">
@@ -105,21 +118,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 import StartAnalysisButton from "~/components/StartAnalysisButton.vue";
 import UploadAnotherFileButton from "~/components/UploadAnotherFileButton.vue";
 import ResetButton from "~/components/ResetButton.vue";
-
 
 export default {
   components: {
     StartAnalysisButton,
     UploadAnotherFileButton,
     ResetButton,
-  },
-  props: {
-    microreactUrl: String,
   },
   data() {
     return {
@@ -129,6 +138,9 @@ export default {
   computed: {
     ...mapGetters({
       data: "entries",
+    }),
+    ...mapState({
+      lineageLink: "lineageLink",
     }),
     headers() {
       return [

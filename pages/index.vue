@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <data-grid v-if="data.length" v-bind:microreact-url="microreactUrl" />
+    <data-grid v-if="data.length" />
     <files-uploader v-else />
   </client-only>
 </template>
@@ -16,10 +16,6 @@ export default {
   components: {
     DataGrid,
     FilesUploader,
-  },
-  async asyncData({ $axios }) {
-    const data = await $axios.$post("/api/data/config", { key: "microreactUrl" });
-    return { microreactUrl: data.microreactUrl };
   },
   data() {
     return {};
