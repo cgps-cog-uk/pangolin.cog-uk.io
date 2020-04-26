@@ -17,6 +17,7 @@
       show-expand
       single-expand
       v:bind-show-select="false"
+      v-on:click:row="rowClick"
     >
       <template v-slot:group.header="{ group, groupBy, items, headers, isOpen, toggle }">
         <td
@@ -110,11 +111,15 @@ import StartAnalysisButton from "~/components/StartAnalysisButton.vue";
 import UploadAnotherFileButton from "~/components/UploadAnotherFileButton.vue";
 import ResetButton from "~/components/ResetButton.vue";
 
+
 export default {
   components: {
     StartAnalysisButton,
     UploadAnotherFileButton,
     ResetButton,
+  },
+  props: {
+    microreactUrl: String,
   },
   data() {
     return {
@@ -184,6 +189,12 @@ export default {
         rowSuffix = " rows";
       }
       return [heading, items.length, rowSuffix].join(" ");
+    },
+    rowClick(item) {
+      if (item.status === "Success" && item.lineage !== "None") {
+        const url = this.microreactUrl + item.lineage;
+        window.open(url);
+      }
     },
   },
 };
