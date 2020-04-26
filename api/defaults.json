@@ -1,4 +1,5 @@
 {
+  "lineageLink": "",
   "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v8",
   "secret": "-",
   "concurrent": 3,
