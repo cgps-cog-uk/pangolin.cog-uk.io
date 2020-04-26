@@ -202,12 +202,6 @@ export default {
       }
       return [heading, items.length, rowSuffix].join(" ");
     },
-    rowClick(item) {
-      if (item.status === "Success" && item.lineage !== "None") {
-        const url = this.microreactUrl + item.lineage;
-        window.open(url);
-      }
-    },
   },
 };
 </script>
