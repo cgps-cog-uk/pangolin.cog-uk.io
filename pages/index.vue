@@ -17,9 +17,6 @@ export default {
     DataGrid,
     FilesUploader,
   },
-  data() {
-    return {};
-  },
   computed: {
     ...mapGetters({
       data: "entries",
