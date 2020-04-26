@@ -9,7 +9,6 @@ const apiRouter = express.Router();
 apiRouter
   .use("/auth", require("./auth"))
   .use("/process", require("./process"))
-  .use("/data", require("./data"))
   .use((req, res) => res.sendStatus(404))
   .use((err, req, res, next) => {
     catchErrorResponse(res, err);
