@@ -1,119 +1,121 @@
 <template>
-  <div class="data-grid">
+  <div>
     <nav>
       <start-analysis-button />
       <reset-button />
       <upload-another-file-button />
     </nav>
-    <v-data-table
-      v-model="selected"
-      dense
-      disable-pagination
-      group-by="status"
-      v-bind:headers="headers"
-      hide-default-footer
-      item-key="id"
-      v-bind:items="data"
-      show-expand
-      single-expand
-      v:bind-show-select="false"
-    >
-      <template v-slot:group.header="{ group, groupBy, items, headers, isOpen, toggle }">
-        <td
-          class="group-header text-start"
-          v-bind:colspan="headers.length"
-        >
-          <v-btn
-            class="ma-0"
-            small
-            icon
-            v-on:click="toggle"
+    <div class="data-grid">
+      <v-data-table
+        v-model="selected"
+        dense
+        disable-pagination
+        group-by="status"
+        v-bind:headers="headers"
+        hide-default-footer
+        item-key="id"
+        v-bind:items="data"
+        show-expand
+        single-expand
+        v:bind-show-select="false"
+      >
+        <template v-slot:group.header="{ group, groupBy, items, headers, isOpen, toggle }">
+          <td
+            class="group-header text-start"
+            v-bind:colspan="headers.length"
           >
-            <v-icon>
-              {{ isOpen ? "mdi-minus" : "mdi-plus" }}
-            </v-icon>
-          </v-btn>
-          {{ groupTitle(group, items) }}
-          <template v-if="group === 'Success'">
             <v-btn
+              class="ma-0"
+              small
               icon
-              title="Download as CSV"
-              v-on:click="onDownloadRowsClick"
+              v-on:click="toggle"
             >
-              <v-icon>mdi-download</v-icon>
+              <v-icon>
+                {{ isOpen ? "mdi-minus" : "mdi-plus" }}
+              </v-icon>
             </v-btn>
-          </template>
-        </td>
-      </template>
-      <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded}">
-        <v-icon v-if="item.status === 'Pending'">
-          mdi-timer-sand-empty
-        </v-icon>
-        <v-icon v-else-if="item.status === 'Analysing'">
-          mdi-loading mdi-spin
-        </v-icon>
-        <v-icon
-          v-else-if="item.status === 'Success'"
-          class="v-data-table__expand-icon"
-          v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
-          title="Click to see global lineage info."
-          v-on:click="expand(!isExpanded)"
-        >
-          {{ isExpanded ? "mdi-check-circle" : "mdi-check" }}
-        </v-icon>
-        <v-icon
-          v-else-if="item.status === 'Failed'"
-          class="v-data-table__expand-icon"
-          v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
-          title="Failed, click to see details."
-          v-on:click="expand(!isExpanded)"
-        >
-          {{ isExpanded ? "mdi-alert-circle" : "mdi-alert-circle-outline" }}
-        </v-icon>
-      </template>
-      <template v-slot:item.lineage="{ item }">
-        <a
-          v-if="item.lineage && item.lineage !== 'None'"
-          v-bind:href="`${lineageLink}${item.lineage}`"
-          target="_blank"
-          rel="noopener"
-          title="View lineage in Microreact"
-        >
-          {{ item.lineage }}
-        </a>
-        <template v-else>
-          {{ item.lineage }}
+            {{ groupTitle(group, items) }}
+            <template v-if="group === 'Success'">
+              <v-btn
+                icon
+                title="Download as CSV"
+                v-on:click="onDownloadRowsClick"
+              >
+                <v-icon>mdi-download</v-icon>
+              </v-btn>
+            </template>
+          </td>
         </template>
-      </template>
-      <template v-slot:expanded-item="{ headers, item }">
-        <td v-if="!item.error" colspan="3" />
-        <td v-if="!item.error">
-          <strong>Most common countries: </strong>
-          {{ item.mostCommonCountries }}
-          <br>
-          <strong>Number of taxa: </strong>
-          {{ item.numberTaxa }}
-          <br>
-          <strong>Date range: </strong>
-          {{ item.dateRange }}
-          <br>
-          <strong>Days since last sampling: </strong>
-          {{ item.daysSinceLastSampling }}
-        </td>
-        <td
-          v-if="!item.error"
-          v-bind:colspan="headers.length - 4"
-        />
-        <td
-          v-if="item.error"
-          v-bind:colspan="headers.length"
-        >
-          <strong>
-            {{ item.error }}
-          </strong>
-        </td>
-      </template>
-    </v-data-table>
+        <template v-slot:item.data-table-expand="{ item, select, isSelected, expand, isExpanded}">
+          <v-icon v-if="item.status === 'Pending'">
+            mdi-timer-sand-empty
+          </v-icon>
+          <v-icon v-else-if="item.status === 'Analysing'">
+            mdi-loading mdi-spin
+          </v-icon>
+          <v-icon
+            v-else-if="item.status === 'Success'"
+            class="v-data-table__expand-icon"
+            v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
+            title="Click to see global lineage info."
+            v-on:click="expand(!isExpanded)"
+          >
+            {{ isExpanded ? "mdi-check-circle" : "mdi-check" }}
+          </v-icon>
+          <v-icon
+            v-else-if="item.status === 'Failed'"
+            class="v-data-table__expand-icon"
+            v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
+            title="Failed, click to see details."
+            v-on:click="expand(!isExpanded)"
+          >
+            {{ isExpanded ? "mdi-alert-circle" : "mdi-alert-circle-outline" }}
+          </v-icon>
+        </template>
+        <template v-slot:item.lineage="{ item }">
+          <a
+            v-if="item.lineage && item.lineage !== 'None'"
+            v-bind:href="`${lineageLink}${item.lineage}`"
+            target="_blank"
+            rel="noopener"
+            title="View lineage in Microreact"
+          >
+            {{ item.lineage }}
+          </a>
+          <template v-else>
+            {{ item.lineage }}
+          </template>
+        </template>
+        <template v-slot:expanded-item="{ headers, item }">
+          <td v-if="!item.error" colspan="3" />
+          <td v-if="!item.error">
+            <strong>Most common countries: </strong>
+            {{ item.mostCommonCountries }}
+            <br>
+            <strong>Number of taxa: </strong>
+            {{ item.numberTaxa }}
+            <br>
+            <strong>Date range: </strong>
+            {{ item.dateRange }}
+            <br>
+            <strong>Days since last sampling: </strong>
+            {{ item.daysSinceLastSampling }}
+          </td>
+          <td
+            v-if="!item.error"
+            v-bind:colspan="headers.length - 4"
+          />
+          <td
+            v-if="item.error"
+            v-bind:colspan="headers.length"
+          >
+            <strong>
+              {{ item.error }}
+            </strong>
+          </td>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 
