@@ -49,6 +49,9 @@ export const mutations = {
       }
     }
   },
+  setLineageLink(state, url) {
+    state.lineageLink = url;
+  },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
       const result = results[entry.jobId];
@@ -78,6 +81,14 @@ export const getters = {
 };
 
 export const actions = {
+  async nuxtServerInit({ commit }, { req }) {
+    if (req.config) {
+      commit(
+        "setLineageLink",
+        req.config.lineageLink
+      );
+    }
+  },
   downloadRows({ getters }, { status }) {
     const entries = getters.entries.filter((x) => x.status === status);
     const rows = [];
