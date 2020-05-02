@@ -1,7 +1,8 @@
 {
   "concurrent": 3,
   "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v8",
-  "lineageLink": "https://microreact.org/project/FONx6etQh/199799e7?dfc=lineage__autocolour&dfo=equals&dfv=",
+  "ukLineageLink": "https://microreact.org/project/FONx6etQh/199799e7?dfc=lineage__autocolour&dfo=equals&dfv=",
+  "globalLineageLink": "https://microreact.org/project/BaEW-w1o0?dfc=lineage&dfo=equals&dfv=",
   "secret": "-",
   "timeout": 120000
 }

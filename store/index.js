@@ -49,8 +49,9 @@ export const mutations = {
       }
     }
   },
-  setLineageLink(state, url) {
-    state.lineageLink = url;
+  setLineageLinks(state, links) {
+    state.ukLineageLink = links.ukLineageLink;
+    state.globalLineageLink = links.globalLineageLink;
   },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
@@ -83,9 +84,13 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ commit }, { req }) {
     if (req.config) {
+      const links = {
+        ukLineageLink: req.config.ukLineageLink,
+        globalLineageLink: req.config.globalLineageLink,
+      };
       commit(
-        "setLineageLink",
-        req.config.lineageLink
+        "setLineageLinks",
+        links
       );
     }
   },
