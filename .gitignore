@@ -93,3 +93,5 @@ sw.*
 *.code-workspace
 *.sqlite
 scratch*
+
+docs
