@@ -115,19 +115,31 @@ class ResultsStore {
         const { lineage,
           "SH-alrt": shalrt,
           UFbootstrap: bootstrap,
+          lineages_version: lineagesVersion,
+          status: qcStatus,
+          note,
           "Most common countries": mostCommonCountries,
           "Date range": dateRange,
           "Number of taxa": numberTaxa,
           "Days since last sampling": daysSinceLastSampling,
         } = result;
+        let error = null;
+        if (status === "failed") {
+          error = "Sequence unable to be processed with Pangolin (unknown error)";
+        } else if (status === "succeeded" && qcStatus !== "passed_qc") {
+          error = `Sequence unable to be processed with Pangolin (${note})`;
+        }
         statuses[seqId] = {
           id: seqId,
           done: ["succeeded", "failed"].includes(status),
-          success: status === "succeeded",
-          error: status === "failed" ? "Sequence unable to be processed with Pangolin" : null,
+          success: status === "succeeded" && qcStatus === "passed_qc",
+          error,
           lineage,
           shalrt,
           bootstrap,
+          lineagesVersion,
+          qcStatus,
+          note,
           mostCommonCountries,
           dateRange,
           numberTaxa,
