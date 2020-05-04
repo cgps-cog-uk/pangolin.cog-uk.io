@@ -200,7 +200,9 @@ export default {
       if (group === "Pending") {
         heading = "READY FOR ANALYSIS";
       } else if (group === "Success") {
-        heading = "ANALYSED (Click tick for more info)";
+        heading = "ANALYSED (Click tick icon for more info)";
+      } else if (group === "Failed") {
+        heading = "FAILED (Click warning icon for more info)";
       } else {
         heading = group.toUpperCase();
       }
