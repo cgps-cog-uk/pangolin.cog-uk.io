@@ -1,6 +1,6 @@
 {
   "concurrent": 3,
-  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v8",
+  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v1.1.4_2020-04-27",
   "ukLineageLink": "https://microreact.org/project/BaEW-w1o0/9fc32d28?dfc=lineage&dfo=equals&dfv=",
   "globalLineageLink": "https://microreact.org/project/BaEW-w1o0/2402cdef?dfc=lineage&dfo=equals&dfv=",
   "secret": "-",
