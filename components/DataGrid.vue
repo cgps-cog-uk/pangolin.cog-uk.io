@@ -73,18 +73,25 @@
           </v-icon>
         </template>
         <template v-slot:item.lineage="{ item }">
+          <span class="lineage-text">{{ item.lineage }}</span>
           <a
             v-if="item.lineage && item.lineage !== 'None'"
-            v-bind:href="`${lineageLink}${item.lineage}`"
+            v-bind:href="`${ukLineageLink}${item.lineage}`"
             target="_blank"
             rel="noopener"
-            title="View lineage in Microreact"
+            title="View lineage in UK Microreact"
           >
-            {{ item.lineage }}
+            <img src="/images/uk.png" class="microreact-link">
           </a>
-          <template v-else>
-            {{ item.lineage }}
-          </template>
+          <a
+            v-if="item.lineage && item.lineage !== 'None'"
+            v-bind:href="`${globalLineageLink}${item.lineage}`"
+            target="_blank"
+            rel="noopener"
+            title="View lineage in Global Microreact"
+          >
+            <img src="/images/globe.png" class="microreact-link">
+          </a>
         </template>
         <template v-slot:expanded-item="{ headers, item }">
           <td v-if="!item.error" colspan="3" />
@@ -142,7 +149,8 @@ export default {
       data: "entries",
     }),
     ...mapState({
-      lineageLink: "lineageLink",
+      ukLineageLink: "ukLineageLink",
+      globalLineageLink: "globalLineageLink",
     }),
     headers() {
       return [
@@ -192,7 +200,9 @@ export default {
       if (group === "Pending") {
         heading = "READY FOR ANALYSIS";
       } else if (group === "Success") {
-        heading = "ANALYSED (Click tick for more info)";
+        heading = "ANALYSED (Click tick icon for more info)";
+      } else if (group === "Failed") {
+        heading = "FAILED (Click warning icon for more info)";
       } else {
         heading = group.toUpperCase();
       }
@@ -291,6 +301,16 @@ nav {
   left: 8px;
   z-index: 1;
 }
+
+span.lineage-text {
+  width: 48px;
+  display: inline-block;
+}
+
+.microreact-link {
+  height: 20px;
+}
+
 @media (max-width:768px) {
   nav button,
   nav label {
