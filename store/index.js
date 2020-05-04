@@ -49,18 +49,29 @@ export const mutations = {
       }
     }
   },
-  setLineageLink(state, url) {
-    state.lineageLink = url;
+  setLineageLinks(state, links) {
+    state.ukLineageLink = links.ukLineageLink;
+    state.globalLineageLink = links.globalLineageLink;
   },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
       const result = results[entry.jobId];
       if (result && result.done) {
-        entry.status = result.success ? "Success" : "Failed";
+        if (result.success) {
+          if (result.qcStatus === "passed_qc") {
+            entry.status = "Success";
+          } else {
+            entry.status = "Failed";
+          }
+        } else {
+          entry.status = "Failed";
+        }
         if (result.success) {
           entry.lineage = result.lineage;
           entry.bootstrap = result.bootstrap;
           entry.shalrt = result.shalrt;
+          entry.qc_status = result.status;
+          entry.note = result.note;
           entry.mostCommonCountries = result.mostCommonCountries;
           entry.numberTaxa = result.numberTaxa;
           entry.dateRange = result.dateRange;
@@ -83,9 +94,13 @@ export const getters = {
 export const actions = {
   async nuxtServerInit({ commit }, { req }) {
     if (req.config) {
+      const links = {
+        ukLineageLink: req.config.ukLineageLink,
+        globalLineageLink: req.config.globalLineageLink,
+      };
       commit(
-        "setLineageLink",
-        req.config.lineageLink
+        "setLineageLinks",
+        links
       );
     }
   },
