@@ -168,7 +168,6 @@ export const actions = {
           method: "POST",
           url: "/api/process/submit/",
           headers: { "Content-Type": "text/plain" },
-          data: lzStringDecompress(entry.sequence),
           data: entry.sequence,
         })
           .then((response) => response.data)
