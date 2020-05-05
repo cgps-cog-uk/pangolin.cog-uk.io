@@ -4,7 +4,6 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import { compress as lzStringCompress, decompress as lzStringDecompress } from "lz-string";
 import { compressToUTF16 as lzStringCompress } from "lz-string";
 
 import exportCsv from "../assets/scripts/export-csv";
