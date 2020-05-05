@@ -16,6 +16,8 @@ export const state = () => ({
   formManifest: null,
   mode: "files",
   analysing: false,
+  showSnackbar: false,
+  snackbarMessage: "",
 });
 
 export const mutations = {
@@ -30,6 +32,8 @@ export const mutations = {
         sequence: lzStringCompress(item.sequence),
       });
     }
+    state.snackbarMessage = "";
+    state.showSnackbar = false;
     state.mode = "data";
     state.analysing = false;
   },
@@ -84,6 +88,16 @@ export const mutations = {
         }
       }
     }
+  },
+  updateSnackbar(state, message) {
+    state.showSnackbar = true;
+    state.snackbarMessage = message;
+  },
+  hideSnackbar(state) {
+    state.showSnackbar = false;
+  },
+  showSnackbar(state) {
+    state.showSnackbar = true;
   },
 };
 

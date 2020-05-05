@@ -18,18 +18,32 @@
         </nav>
       </header>
       <main>
+        <v-snackbar
+          v-bind:value="showSnackbar"
+          top
+          v-bind:timeout="snackbarTimeout"
+          v-bind:color="snackbarColour"
+        >
+          {{ snackbarMessage }}
+          <v-btn
+            text
+            v-on:click="hideSnackbar"
+          >
+            Close
+          </v-btn>
+        </v-snackbar>
         <nuxt />
       </main>
       <footer>
         <span>
           Logged in as <strong>{{ $auth.user.username }}</strong>
           <a href="/logout">
-              Log out
+            Log out
           </a>
         </span>
         <ul>
           <li>
-            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by 
+            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by
           </li>
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
@@ -41,7 +55,21 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
+  data() {
+    return {
+      snackbarColour: "#757289",
+      snackbarTimeout: 0,
+    };
+  },
+  computed: {
+    ...mapState(["snackbarMessage", "showSnackbar"]),
+  },
+  methods: {
+    ...mapMutations(["hideSnackbar"]),
+  },
 };
 </script>
 
