@@ -22,10 +22,6 @@
       </main>
       <footer>
         <span>
-          Logged in as <strong>{{ $auth.user.username }}</strong>
-          <a href="/logout">
-              Log out
-          </a>
         </span>
         <ul>
           <li>
