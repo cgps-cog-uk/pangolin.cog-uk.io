@@ -4,7 +4,7 @@
 const queue = require("../../utils/queue");
 
 module.exports = function (req, res, next) {
-  console.info("Got request to process a fasta sequence for", req.user.username);
+  console.info("Got request to process a fasta sequence.");
 
   Promise.resolve(req.body)
     .then((sequenceAsString) => queue.enqueue(sequenceAsString))
