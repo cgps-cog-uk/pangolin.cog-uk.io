@@ -12,18 +12,6 @@
       multiple="multiple"
       v-on:change="handleFileChange"
     >
-    <v-snackbar
-      v-bind:value="showSnackbar"
-      top
-    >
-      {{ message }}
-      <v-btn
-        text
-        v-on:click="setInfoMessage(null)"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
   </label>
 </template>
 
@@ -32,27 +20,21 @@ import { mapMutations } from "vuex";
 import sequencesFromFiles from "../assets/scripts/sequences-from-files";
 
 export default {
-  data() {
-    return {
-      message: "",
-    };
-  },
-  computed: {
-    showSnackbar() {
-      return !!this.message;
-    },
-  },
+
   methods: {
     ...mapMutations({
       enqueueFiles: "addSequencesToQueue",
+      updateSnackbar: "updateSnackbar",
+      hideSnackbar: "hideSnackbar",
     }),
     handleFileChange(event) {
-      this.setInfoMessage(null);
+      this.hideSnackbar();
       const files = event.target.files;
       if (files.length) {
+        this.updateSnackbar("Compressing sequences ....");
         sequencesFromFiles(files)
           .then((sequences) => this.enqueueFiles(sequences))
-          .catch((err) => this.setInfoMessage(err.message || err));
+          .catch((err) => this.updateSnackbar(err.message || err));
       }
     },
     setInfoMessage(message) {

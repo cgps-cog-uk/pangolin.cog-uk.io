@@ -20,7 +20,6 @@
     >
       Select fasta file to upload
     </label>
-    <p>{{ message }}</p>
   </div>
 </template>
 
@@ -48,6 +47,7 @@ export default {
   methods: {
     ...mapMutations({
       enqueueFiles: "addSequencesToQueue",
+      updateSnackbar: "updateSnackbar",
     }),
     handleFileChange(event) {
       const files = event.target.files;
@@ -69,14 +69,12 @@ export default {
     selectFiles() {
       this.$refs["file-input"].click();
     },
-    setInfoMessage(message) {
-      this.message = message;
-    },
     processFiles(files) {
       if (files.length) {
+        this.updateSnackbar("Compressing sequences ....");
         sequencesFromFiles(files)
           .then((sequences) => this.enqueueFiles(sequences))
-          .catch((err) => this.setInfoMessage(err.message || err));
+          .catch((err) => this.updateSnackbar(err.message || err));
       }
     },
   },
