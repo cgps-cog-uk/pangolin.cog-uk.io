@@ -4,8 +4,6 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import { compress as lzStringCompress, decompress as lzStringDecompress } from "lz-string";
-
 import exportCsv from "../assets/scripts/export-csv";
 
 export const state = () => ({
@@ -16,6 +14,8 @@ export const state = () => ({
   formManifest: null,
   mode: "files",
   analysing: false,
+  showSnackbar: false,
+  snackbarMessage: "",
 });
 
 export const mutations = {
@@ -27,9 +27,11 @@ export const mutations = {
         status: "Pending",
         file: item.file,
         name: item.name,
-        sequence: lzStringCompress(item.sequence),
+        sequence: item.sequence,
       });
     }
+    state.snackbarMessage = "";
+    state.showSnackbar = false;
     state.mode = "data";
     state.analysing = false;
   },
@@ -84,6 +86,16 @@ export const mutations = {
         }
       }
     }
+  },
+  updateSnackbar(state, message) {
+    state.showSnackbar = true;
+    state.snackbarMessage = message;
+  },
+  hideSnackbar(state) {
+    state.showSnackbar = false;
+  },
+  showSnackbar(state) {
+    state.showSnackbar = true;
   },
 };
 
@@ -168,7 +180,7 @@ export const actions = {
           method: "POST",
           url: "/api/process/submit/",
           headers: { "Content-Type": "text/plain" },
-          data: lzStringDecompress(entry.sequence),
+          data: entry.sequence,
         })
           .then((response) => response.data)
           .then((response) => {
