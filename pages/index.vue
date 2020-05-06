@@ -23,19 +23,6 @@ export default {
     }),
   },
   methods: {
-    setFilter(filter) {
-      this.$store.commit("setFilter", filter);
-    },
-    startAnalysis() {
-      const item = this.data.find((x) => x.status === "Pending");
-      if (item) {
-        this.$store.dispatch("analyse", item.id)
-          .catch((error) => console.error(error))
-          .then(() => {
-            setTimeout(() => this.startAnalysis(), 0);
-          });
-      }
-    },
   },
 };
 </script>
