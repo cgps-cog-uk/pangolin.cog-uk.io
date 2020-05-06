@@ -4,8 +4,6 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import { compressToBase64 as lzStringCompress } from "lz-string";
-
 import exportCsv from "../assets/scripts/export-csv";
 
 export const state = () => ({
@@ -29,7 +27,7 @@ export const mutations = {
         status: "Pending",
         file: item.file,
         name: item.name,
-        sequence: lzStringCompress(item.sequence),
+        sequence: item.sequence,
       });
     }
     state.snackbarMessage = "";
