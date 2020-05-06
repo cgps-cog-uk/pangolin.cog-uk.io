@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint "no-throw-literal": 0 */
 
-import { decompressFromBase64 as lzStringDecompress } from "lz-string";
+import { decompressFromBase64 as lzStringDecompress } from "async-lz-string";
 
 const queue = require("../../utils/queue");
 
