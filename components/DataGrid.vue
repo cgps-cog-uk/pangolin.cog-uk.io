@@ -50,9 +50,7 @@
           <v-icon v-if="item.status === 'Pending'">
             mdi-timer-sand-empty
           </v-icon>
-          <v-icon v-else-if="item.status === 'Analysing'">
-            mdi-loading mdi-spin
-          </v-icon>
+          <img v-else-if="item.status === 'Analysing'" src="images/Rolling-1s-24px.gif">
           <v-icon
             v-else-if="item.status === 'Success'"
             class="v-data-table__expand-icon"
