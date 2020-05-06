@@ -71,7 +71,7 @@ export default {
     },
     processFiles(files) {
       if (files.length) {
-        this.updateSnackbar("Compressing sequences ....");
+        this.updateSnackbar("Pre-processing sequences ....");
         sequencesFromFiles(files)
           .then((sequences) => this.enqueueFiles(sequences))
           .catch((err) => this.updateSnackbar(err.message || err));
