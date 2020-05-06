@@ -18,7 +18,11 @@ async function processFiles(files) {
       const trimmedLine = line.trim();
       if (trimmedLine) {
         if (trimmedLine.startsWith(">")) {
-          sequences.push({ file: file.name, name: trimmedLine.slice(1), sequence: "" });
+          sequences.push({
+            file: file.name,
+            name: trimmedLine.slice(1),
+            sequence: "",
+          });
         }
         else {
           sequences[sequences.length - 1].sequence += trimmedLine;
@@ -30,9 +34,24 @@ async function processFiles(files) {
   return sequences;
 }
 
-export default function (files) {
+function compress(text) {
+  const lzString = require("lz-string");
+  return new Promise((resolve) => {
+    window.requestAnimationFrame(() => {
+      resolve(lzString.compressToBase64(text));
+    });
+  });
+}
+
+export default async function (files) {
   return (
     Promise.resolve(files)
       .then(processFiles)
+      .then(async (items) => {
+        for (const item of items) {
+          item.sequence = await compress(item.sequence);
+        }
+        return items;
+      })
   );
 }
