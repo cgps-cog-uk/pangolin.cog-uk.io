@@ -50,7 +50,7 @@
           <v-icon v-if="item.status === 'Pending'">
             mdi-timer-sand-empty
           </v-icon>
-          <img v-else-if="item.status === 'Analysing'" src="images/Rolling-1s-24px.gif">
+          <img v-else-if="item.status === 'Analysing'" src="images/Rolling-1s-24px.png">
           <v-icon
             v-else-if="item.status === 'Success'"
             class="v-data-table__expand-icon"
@@ -206,9 +206,9 @@ export default {
       }
       let rowSuffix;
       if (items.length === 1) {
-        rowSuffix = " row";
+        rowSuffix = " sequence";
       } else {
-        rowSuffix = " rows";
+        rowSuffix = " sequences";
       }
       return [heading, items.length, rowSuffix].join(" ");
     },
