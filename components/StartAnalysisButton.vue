@@ -27,7 +27,7 @@ export default {
         this.$store.dispatch("uploadOne", item.id)
           .catch((error) => console.error(error))
           .then(() => {
-            setTimeout(() => this.startAnalysis(), 0);
+            setTimeout(() => this.startAnalysis(), 500);
           });
       }
     },
