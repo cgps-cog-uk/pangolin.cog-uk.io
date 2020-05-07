@@ -25,7 +25,7 @@
             The software to assign lineages based on the algorithm that was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a>, <a href="https://github.com/jtmccr1">JT McCrone</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>. The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
           </p>
           <p class="recommended-browsers align-center justify-left row">
-            Recommended browsers&nbsp;<img title="Chrome" src="/images/chrome.png" class="browser-logo">&nbsp;or&nbsp;<img title="Firefox" src="/images/firefox.png" class="browser-logo">
+            Recommended browsers&nbsp;<img title="Chrome" src="/images/chrome.png" class="browser-logo">&nbsp;or&nbsp;<img title="Safari" src="/images/safari.png" class="browser-logo">
           </p>
         </div>
       </div>
