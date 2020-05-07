@@ -43,7 +43,7 @@
         </span>
         <ul>
           <li>
-            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by
+            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a>, <a href="https://github.com/ViralVerity">Verity</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by
           </li>
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
