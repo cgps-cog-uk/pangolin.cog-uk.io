@@ -16,6 +16,7 @@ export const state = () => ({
   analysing: false,
   showSnackbar: false,
   snackbarMessage: "",
+  microreactDataVersion: null,
 });
 
 export const mutations = {
@@ -60,6 +61,9 @@ export const mutations = {
   setVersions(state, versions) {
     state.pangolinVersion = versions.pangolinVersion;
     state.lineagesVersion = versions.lineagesVersion;
+  },
+  setMicroreactDataVersion(state, microreactDataVersion) {
+    state.microreactDataVersion = microreactDataVersion;
   },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
@@ -127,6 +131,9 @@ export const actions = {
         "setVersions",
         versions
       );
+      if (req.config.microreactDataVersion) {
+        commit("setMicroreactDataVersion", req.config.microreactDataVersion);
+      }
     }
   },
   downloadRows({ getters }, { status }) {

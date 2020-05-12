@@ -77,18 +77,28 @@
             v-bind:href="`${ukLineageLink}${item.lineage}`"
             target="_blank"
             rel="noopener"
-            title="View lineage in UK Microreact"
+            alt="ukToolTipText"
           >
-            <img src="/images/uk.png" class="microreact-link">
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <img src="/images/uk.png" class="microreact-link" v-on="on">
+              </template>
+              <span>{{ ukToolTipText }}</span>
+            </v-tooltip>
           </a>
           <a
             v-if="item.lineage && item.lineage !== 'None'"
             v-bind:href="`${globalLineageLink}${item.lineage}`"
             target="_blank"
             rel="noopener"
-            title="View lineage in Global Microreact"
+            alt="globalToolTipText"
           >
-            <img src="/images/globe.png" class="microreact-link">
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <img src="/images/globe.png" class="microreact-link" v-on="on">
+              </template>
+              <span>{{ globalToolTipText }}</span>
+            </v-tooltip>
           </a>
         </template>
         <template v-slot:expanded-item="{ headers, item }">
@@ -150,6 +160,20 @@ export default {
       ukLineageLink: "ukLineageLink",
       globalLineageLink: "globalLineageLink",
     }),
+    globalToolTipText() {
+      if (this.$store.state.microreactDataVersion) {
+        return `View lineage in Global Microreact (data from ${this.$store.state.microreactDataVersion})`;
+      } else {
+        return "View lineage in Global Microreact";
+      }
+    },
+    ukToolTipText() {
+      if (this.$store.state.microreactDataVersion) {
+        return `View lineage in UK Microreact (data from ${this.$store.state.microreactDataVersion})`;
+      } else {
+        return "View lineage in UK Microreact";
+      }
+    },
     headers() {
       return [
         {
