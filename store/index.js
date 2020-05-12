@@ -57,6 +57,10 @@ export const mutations = {
     state.ukLineageLink = links.ukLineageLink;
     state.globalLineageLink = links.globalLineageLink;
   },
+  setVersions(state, versions) {
+    state.pangolinVersion = versions.pangolinVersion;
+    state.lineagesVersion = versions.lineagesVersion;
+  },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
       const result = results[entry.jobId];
@@ -115,6 +119,13 @@ export const actions = {
       commit(
         "setLineageLinks",
         links
+      );
+      // eslint-disable-next-line no-unused-vars
+      const [_, pangolinVersion, lineagesVersion] = req.config.imageName.match("^.+:(.+)_(.+)$");
+      const versions = { pangolinVersion, lineagesVersion };
+      commit(
+        "setVersions",
+        versions
       );
     }
   },
