@@ -35,12 +35,7 @@
         <nuxt />
       </main>
       <footer>
-        <span>
-          Logged in as <strong>{{ $auth.user.username }}</strong>
-          <a href="/logout">
-            Log out
-          </a>
-        </span>
+        <span />
         <ul>
           <li>
             Pangolin (version <a v-bind:href="pangolinVersionLink" target="_blank">{{ pangolinVersion }}</a>,
