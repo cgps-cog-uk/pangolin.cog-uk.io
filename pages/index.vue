@@ -12,7 +12,6 @@ import FilesUploader from "~/components/FilesUploader.vue";
 import DataGrid from "~/components/DataGrid.vue";
 
 export default {
-  middleware: "auth",
   components: {
     DataGrid,
     FilesUploader,
