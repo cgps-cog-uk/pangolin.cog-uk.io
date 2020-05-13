@@ -22,7 +22,7 @@ module.exports = function (seqHash, sequenceText) {
 
       if (exitCode !== 0) {
         container.stderr.setEncoding("utf8");
-        reject(new Error(container.stderr.read()));
+        reject(new Error(`DOCKER ERROR:\nEXITCODE:${exitCode}\nSTDOUT:\n${container.stdout.read()}\nSTDERR:\n${container.stderr.read()}`));
       }
       else if (buffer.length === 0) {
         reject(new Error("No output received."));

@@ -18,14 +18,29 @@
         </nav>
       </header>
       <main>
+        <v-snackbar
+          v-bind:value="showSnackbar"
+          top
+          v-bind:timeout="snackbarTimeout"
+          v-bind:color="snackbarColour"
+        >
+          {{ snackbarMessage }}
+          <v-btn
+            text
+            v-on:click="hideSnackbar"
+          >
+            Close
+          </v-btn>
+        </v-snackbar>
         <nuxt />
       </main>
       <footer>
-        <span>
-        </span>
+        <span />
         <ul>
           <li>
-            Pangolin is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by 
+            Pangolin (version <a v-bind:href="pangolinVersionLink" target="_blank">{{ pangolinVersion }}</a>,
+            lineages version <a v-bind:href="lineagesVersionLink" target="_blank">{{ lineagesVersion }}</a>)
+            is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a>, <a href="https://github.com/ViralVerity">Verity</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by
           </li>
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
@@ -37,7 +52,27 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
+  data() {
+    return {
+      snackbarColour: "#757289",
+      snackbarTimeout: 0,
+    };
+  },
+  computed: {
+    ...mapState(["snackbarMessage", "showSnackbar", "pangolinVersion", "lineagesVersion"]),
+    pangolinVersionLink() {
+      return `https://github.com/hCoV-2019/pangolin/tree/${this.$store.state.pangolinVersion}`;
+    },
+    lineagesVersionLink() {
+      return `https://github.com/hCoV-2019/lineages/tree/${this.$store.state.lineagesVersion}`;
+    },
+  },
+  methods: {
+    ...mapMutations(["hideSnackbar"]),
+  },
 };
 </script>
 

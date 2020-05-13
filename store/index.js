@@ -4,8 +4,6 @@
 
 import { v4 as uuidv4 } from "uuid";
 
-import { compress as lzStringCompress, decompress as lzStringDecompress } from "lz-string";
-
 import exportCsv from "../assets/scripts/export-csv";
 
 export const state = () => ({
@@ -16,6 +14,9 @@ export const state = () => ({
   formManifest: null,
   mode: "files",
   analysing: false,
+  showSnackbar: false,
+  snackbarMessage: "",
+  microreactDataVersion: null,
 });
 
 export const mutations = {
@@ -27,9 +28,11 @@ export const mutations = {
         status: "Pending",
         file: item.file,
         name: item.name,
-        sequence: lzStringCompress(item.sequence),
+        sequence: item.sequence,
       });
     }
+    state.snackbarMessage = "";
+    state.showSnackbar = false;
     state.mode = "data";
     state.analysing = false;
   },
@@ -54,6 +57,13 @@ export const mutations = {
   setLineageLinks(state, links) {
     state.ukLineageLink = links.ukLineageLink;
     state.globalLineageLink = links.globalLineageLink;
+  },
+  setVersions(state, versions) {
+    state.pangolinVersion = versions.pangolinVersion;
+    state.lineagesVersion = versions.lineagesVersion;
+  },
+  setMicroreactDataVersion(state, microreactDataVersion) {
+    state.microreactDataVersion = microreactDataVersion;
   },
   updateResults(state, results) {
     for (const entry of state.data.entries) {
@@ -85,6 +95,16 @@ export const mutations = {
       }
     }
   },
+  updateSnackbar(state, message) {
+    state.showSnackbar = true;
+    state.snackbarMessage = message;
+  },
+  hideSnackbar(state) {
+    state.showSnackbar = false;
+  },
+  showSnackbar(state) {
+    state.showSnackbar = true;
+  },
 };
 
 export const getters = {
@@ -104,6 +124,16 @@ export const actions = {
         "setLineageLinks",
         links
       );
+      // eslint-disable-next-line no-unused-vars
+      const [_, pangolinVersion, lineagesVersion] = req.config.imageName.match("^.+:(.+)_(.+)$");
+      const versions = { pangolinVersion, lineagesVersion };
+      commit(
+        "setVersions",
+        versions
+      );
+      if (req.config.microreactDataVersion) {
+        commit("setMicroreactDataVersion", req.config.microreactDataVersion);
+      }
     }
   },
   downloadRows({ getters }, { status }) {
@@ -168,7 +198,7 @@ export const actions = {
           method: "POST",
           url: "/api/process/submit/",
           headers: { "Content-Type": "text/plain" },
-          data: lzStringDecompress(entry.sequence),
+          data: entry.sequence,
         })
           .then((response) => response.data)
           .then((response) => {
