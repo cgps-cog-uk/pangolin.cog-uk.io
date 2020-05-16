@@ -2,6 +2,7 @@
   <div>
     <nav>
       <start-analysis-button />
+      <retry-analysis-button />
       <reset-button />
       <upload-another-file-button />
     </nav>
@@ -138,12 +139,14 @@
 import { mapGetters, mapState } from "vuex";
 
 import StartAnalysisButton from "~/components/StartAnalysisButton.vue";
+import RetryAnalysisButton from "~/components/RetryAnalysisButton.vue";
 import UploadAnotherFileButton from "~/components/UploadAnotherFileButton.vue";
 import ResetButton from "~/components/ResetButton.vue";
 
 export default {
   components: {
     StartAnalysisButton,
+    RetryAnalysisButton,
     UploadAnotherFileButton,
     ResetButton,
   },

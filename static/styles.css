@@ -45,6 +45,23 @@ body {
   color: #8C4240;
   background-color: #fff;
 }
+.button--pangolin-pink {
+  display: inline-block;
+  border-radius: 4px;
+  border: 2px solid #8C4240;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 8px;
+  background: #B9948F;
+  line-height: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button--pangolin-pink:hover {
+  color: #B9948F;
+  background-color: #fff;
+}
 .button--pangolin-brown {
   display: inline-block;
   border-radius: 4px;

@@ -46,11 +46,13 @@ export const mutations = {
     if (entry) {
       entry.status = status;
       if (status === "Analysing") {
-        entry.sequence = null;
         entry.jobId = jobId;
       }
       if (status === "Failed") {
         entry.error = error;
+      }
+      if (status === "Success") {
+        entry.sequence = null;
       }
     }
   },
