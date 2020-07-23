@@ -192,12 +192,8 @@ export default {
           text: "Lineage",
         },
         {
-          value: "bootstrap",
-          text: "Bootstrap support value",
-        },
-        {
-          value: "shalrt",
-          text: "SH-aLRT support value",
+          value: "probability",
+          text: "Assignment probability",
         },
       ];
     },

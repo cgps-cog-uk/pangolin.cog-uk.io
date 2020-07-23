@@ -82,8 +82,7 @@ export const mutations = {
         }
         if (result.success) {
           entry.lineage = result.lineage;
-          entry.bootstrap = result.bootstrap;
-          entry.shalrt = result.shalrt;
+          entry.probability = result.probability;
           entry.qc_status = result.status;
           entry.note = result.note;
           entry.mostCommonCountries = result.mostCommonCountries;
@@ -145,8 +144,7 @@ export const actions = {
     for (const {
       name,
       lineage,
-      bootstrap,
-      shalrt,
+      probability,
       mostCommonCountries,
       numberTaxa,
       dateRange,
@@ -155,8 +153,7 @@ export const actions = {
       const row = {
         "Sequence name": name,
         Lineage: lineage,
-        Bootstrap: bootstrap,
-        "SH-aLRT": shalrt,
+        Probability: probability,
         "Most common countries": mostCommonCountries,
         "Number of taxa": numberTaxa,
         "Date range": dateRange,

@@ -113,8 +113,7 @@ class ResultsStore {
     for (const { seqId, status, result } of rows) {
       try {
         const { lineage,
-          "SH-alrt": shalrt,
-          UFbootstrap: bootstrap,
+          probability,
           lineages_version: lineagesVersion,
           status: qcStatus,
           note,
@@ -135,8 +134,7 @@ class ResultsStore {
           success: status === "succeeded" && qcStatus === "passed_qc",
           error,
           lineage,
-          shalrt,
-          bootstrap,
+          probability,
           lineagesVersion,
           qcStatus,
           note,
