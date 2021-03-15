@@ -54,12 +54,8 @@
           <img v-else-if="item.status === 'Analysing'" src="images/Rolling-1s-24px.png">
           <v-icon
             v-else-if="item.status === 'Success'"
-            class="v-data-table__expand-icon"
-            v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
-            title="Click to see global lineage info."
-            v-on:click="expand(!isExpanded)"
           >
-            {{ isExpanded ? "mdi-check-circle" : "mdi-check" }}
+            mdi-check
           </v-icon>
           <v-icon
             v-else-if="item.status === 'Failed'"
@@ -101,26 +97,25 @@
               <span>{{ globalToolTipText }}</span>
             </v-tooltip>
           </a>
+          <a
+            v-if="item.lineage && item.lineage !== 'None'"
+            v-bind:href="`https://cov-lineages.org/lineages/lineage_${item.lineage}.html`"
+            class="lineage-link"
+            target="_blank"
+            rel="noopener"
+            alt="infoToolTipText"
+          >
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on">
+                  mdi-information-outline
+                </v-icon>
+              </template>
+              <span>View extra information about the lineage</span>
+            </v-tooltip>
+          </a>
         </template>
         <template v-slot:expanded-item="{ headers, item }">
-          <td v-if="!item.error" colspan="3" />
-          <td v-if="!item.error">
-            <strong>Most common countries: </strong>
-            {{ item.mostCommonCountries }}
-            <br>
-            <strong>Number of taxa: </strong>
-            {{ item.numberTaxa }}
-            <br>
-            <strong>Date range: </strong>
-            {{ item.dateRange }}
-            <br>
-            <strong>Days since last sampling: </strong>
-            {{ item.daysSinceLastSampling }}
-          </td>
-          <td
-            v-if="!item.error"
-            v-bind:colspan="headers.length - 4"
-          />
           <td
             v-if="item.error"
             v-bind:colspan="headers.length"
@@ -330,6 +325,11 @@ span.lineage-text {
 
 .microreact-link {
   height: 20px;
+}
+
+.lineage-link {
+  vertical-align: super;
+  text-decoration: none;
 }
 
 @media (max-width:768px) {
