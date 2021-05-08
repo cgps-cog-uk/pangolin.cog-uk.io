@@ -187,8 +187,8 @@ export default {
           text: "Lineage",
         },
         {
-          value: "probability",
-          text: "Assignment probability",
+          value: "conflict",
+          text: "Assignment Conflict",
         },
       ];
     },

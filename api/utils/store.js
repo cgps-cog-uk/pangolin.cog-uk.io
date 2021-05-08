@@ -113,7 +113,7 @@ class ResultsStore {
     for (const { seqId, status, result } of rows) {
       try {
         const { lineage,
-          probability,
+          conflict,
           lineages_version: lineagesVersion,
           status: qcStatus,
           note,
@@ -134,7 +134,7 @@ class ResultsStore {
           success: status === "succeeded" && qcStatus === "passed_qc",
           error,
           lineage,
-          probability,
+          conflict,
           lineagesVersion,
           qcStatus,
           note,

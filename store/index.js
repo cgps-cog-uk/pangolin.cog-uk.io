@@ -82,7 +82,7 @@ export const mutations = {
         }
         if (result.success) {
           entry.lineage = result.lineage;
-          entry.probability = result.probability;
+          entry.conflict = result.conflict;
           entry.qc_status = result.status;
           entry.note = result.note;
           entry.mostCommonCountries = result.mostCommonCountries;
@@ -144,7 +144,7 @@ export const actions = {
     for (const {
       name,
       lineage,
-      probability,
+      conflict,
       mostCommonCountries,
       numberTaxa,
       dateRange,
@@ -153,7 +153,7 @@ export const actions = {
       const row = {
         "Sequence name": name,
         Lineage: lineage,
-        Probability: probability,
+        Conflict: conflict,
         "Most common countries": mostCommonCountries,
         "Number of taxa": numberTaxa,
         "Date range": dateRange,
