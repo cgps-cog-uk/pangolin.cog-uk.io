@@ -111,16 +111,19 @@ class ResultsStore {
     const statuses = {};
 
     for (const { seqId, status, result } of rows) {
+      console.log(result);
       try {
         const { lineage,
           conflict,
-          lineages_version: lineagesVersion,
+          ambiguity_score: ambiguityScore,
+          scorpio_call: scorpioCall,
+          scorpio_support: scorpioSupport,
+          scorpio_conflict: scorpioConflict,
           status: qcStatus,
           note,
-          "Most common countries": mostCommonCountries,
-          "Date range": dateRange,
-          "Number of taxa": numberTaxa,
-          "Days since last sampling": daysSinceLastSampling,
+          version,
+          pangolin_version: pangolinVersion,
+          pangoLEARN_version: pangoLEARNVersion,
         } = result;
         let error = null;
         if (status === "failed") {
@@ -133,15 +136,17 @@ class ResultsStore {
           done: ["succeeded", "failed"].includes(status),
           success: status === "succeeded" && qcStatus === "passed_qc",
           error,
+          qcStatus,
           lineage,
           conflict,
-          lineagesVersion,
-          qcStatus,
+          ambiguityScore,
+          scorpioCall,
+          scorpioSupport,
+          scorpioConflict,
           note,
-          mostCommonCountries,
-          dateRange,
-          numberTaxa,
-          daysSinceLastSampling,
+          version,
+          pangolinVersion,
+          pangoLEARNVersion,
         };
       } catch (err) {
         statuses[seqId] = {

@@ -1,6 +1,6 @@
 import readFile from "./read-file";
 
-const validFiles = /(\.fasta|\.fa)$/i;
+const validFiles = /(\.fasta|\.fa|\.fas)$/i;
 
 async function processFiles(files) {
   for (const file of files) {

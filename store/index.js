@@ -83,12 +83,15 @@ export const mutations = {
         if (result.success) {
           entry.lineage = result.lineage;
           entry.conflict = result.conflict;
+          entry.ambiguityScore = result.ambiguityScore;
+          entry.scorpioCall = result.scorpioCall;
+          entry.scorpioSupport = result.scorpioSupport;
+          entry.scorpioConflict = result.scorpioConflict;
+          entry.version = result.version;
+          entry.pangolinVersion = result.pangolinVersion;
+          entry.pangoLEARNVersion = result.pangoLEARNVersion;
           entry.qc_status = result.status;
           entry.note = result.note;
-          entry.mostCommonCountries = result.mostCommonCountries;
-          entry.numberTaxa = result.numberTaxa;
-          entry.dateRange = result.dateRange;
-          entry.daysSinceLastSampling = result.daysSinceLastSampling;
         }
         else {
           entry.error = result.error;
@@ -137,7 +140,7 @@ export const actions = {
       }
     }
   },
-  downloadRows({ getters }, { status }) {
+  downloadRows({ state, getters }, { status }) {
     const entries = getters.entries.filter((x) => x.status === status);
     const rows = [];
     // eslint-disable-next-line no-unused-vars
@@ -145,19 +148,24 @@ export const actions = {
       name,
       lineage,
       conflict,
-      mostCommonCountries,
-      numberTaxa,
-      dateRange,
-      daysSinceLastSampling,
+      ambiguityScore,
+      scorpioCall,
+      scorpioSupport,
+      scorpioConflict,
+      note,
     } of entries) {
       const row = {
         "Sequence name": name,
         Lineage: lineage,
         Conflict: conflict,
-        "Most common countries": mostCommonCountries,
-        "Number of taxa": numberTaxa,
-        "Date range": dateRange,
-        "Days since last sampling": daysSinceLastSampling,
+        "Ambiguity score": ambiguityScore,
+        "Scorpio call": scorpioCall,
+        "Scorpio support": scorpioSupport,
+        "Scorpio conflict": scorpioConflict,
+        Note: note,
+        "pangolin version": state.pangolinVersion,
+        "pangoLEARN version": state.lineagesVersion,
+
       };
       rows.push(row);
     }

@@ -54,8 +54,12 @@
           <img v-else-if="item.status === 'Analysing'" src="images/Rolling-1s-24px.png">
           <v-icon
             v-else-if="item.status === 'Success'"
+            class="v-data-table__expand-icon"
+            v-bind:class="{ 'v-data-table__expand-icon--active': isExpanded }"
+            title="Click to see extra info."
+            v-on:click="expand(!isExpanded)"
           >
-            mdi-check
+            {{ isExpanded ? "mdi-check-circle" : "mdi-check" }}
           </v-icon>
           <v-icon
             v-else-if="item.status === 'Failed'"
@@ -116,6 +120,24 @@
           </a>
         </template>
         <template v-slot:expanded-item="{ headers, item }">
+          <td v-if="!item.error" colspan="3" />
+          <td v-if="!item.error" colspan="2">
+            <strong>Ambiguity score: </strong>
+            {{ item.ambiguityScore }}
+            <br>
+            <strong>Scorpio call: </strong>
+            {{ item.scorpioCall }}
+            <br>
+            <strong>Scorpio support: </strong>
+            {{ item.scorpioSupport }}
+            <br>
+            <strong>Scorpio conflict: </strong>
+            {{ item.scorpioConflict }}
+            <br>
+            <strong>Note: </strong>
+            {{ item.note }}
+          </td>
+
           <td
             v-if="item.error"
             v-bind:colspan="headers.length"
