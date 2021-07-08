@@ -103,7 +103,7 @@
           </a>
           <a
             v-if="item.lineage && item.lineage !== 'None'"
-            v-bind:href="`https://cov-lineages.org/lineages/lineage_${item.lineage}.html`"
+            v-bind:href="`https://cov-lineages.org/lineage.html?lineage=${item.lineage}`"
             class="lineage-link"
             target="_blank"
             rel="noopener"
