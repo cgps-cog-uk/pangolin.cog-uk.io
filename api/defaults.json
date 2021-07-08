@@ -1,6 +1,6 @@
 {
   "concurrent": 1,
-  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v3.0.5_2021-06-05",
+  "imageName": "registry.gitlab.com/cgps/cog-uk/lineages:v3.1.5_2021-06-15",
   "ukLineageLink": "https://microreact.org/project/cogconsortium-2020-07-21/5576974e?dfc=lineage&dfo=equals&dfv=",
   "globalLineageLink": "https://microreact.org/project/cogconsortium-2020-07-21/24ed1f5a?dfc=lineage&dfo=equals&dfv=",
   "microreactDataVersion": "2020-10-30",
