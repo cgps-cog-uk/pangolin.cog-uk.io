@@ -1,12 +1,12 @@
 build:
-  image: docker:dind
   only:
     - tags
-  before_script:
+  services:
+    - docker:19.03.1-dind
+  script:
     - docker login
       --username gitlab-ci-token
       --password $CI_JOB_TOKEN $CI_REGISTRY
-  script:
     - TAG=$(echo $CI_COMMIT_REF_NAME | cut -d'.' -f 1)
     - docker build
       --force-rm
