@@ -45,6 +45,10 @@
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
           </li>
+          <li>. Hosted on
+          <li>
+            <a href="https://www.pathogensurveillance.net"><img src="/images/CLIMB.png"></a>
+          </li>
         </ul>
       </footer>
     </div>
@@ -64,10 +68,10 @@ export default {
   computed: {
     ...mapState(["snackbarMessage", "showSnackbar", "pangolinVersion", "lineagesVersion"]),
     pangolinVersionLink() {
-      return `https://github.com/hCoV-2019/pangolin/tree/${this.$store.state.pangolinVersion}`;
+      return `https://github.com/cov-lineages/pangolin/releases/tag/v${this.$store.state.pangolinVersion}`;
     },
     lineagesVersionLink() {
-      return `https://github.com/hCoV-2019/lineages/tree/${this.$store.state.lineagesVersion}`;
+      return `https://github.com/cov-lineages/pangoLEARN/releases/tag/${this.$store.state.lineagesVersion}`;
     },
   },
   methods: {
@@ -164,7 +168,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: .75rem;
+  font-size: 1rem;
   color: #4a4a4f;
   align-items: flex-start;
   font-weight: 500;
@@ -189,7 +193,7 @@ footer a {
 }
 
 footer ul li img {
-  height: 24px;
+  height: 36px;
 }
 
 @media (min-width:768px) {

@@ -19,8 +19,10 @@
             You can upload one or more sequences by dragging and dropping a (multi)fasta file or clicking “Select fasta file to upload” and selecting a (multi)fasta file.
           </p>
           <p>
-            This Web Application assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="https://www.biorxiv.org/content/10.1101/2020.04.17.046086v1">article</a>
+            This Web Application assigns lineages to COVID-19 sequenes based on the methodology described in this <a href="https://academic.oup.com/ve/article/7/2/veab064/6315289">article</a>
           </p>
+          <p>
+            To be able to assign lineages, store and organise your data as well produce a phylogeny from multiple SAR-CoV-2 sequences head over to <a href="https://pathogen.watch" target="_blank">Pathogenwatch</a>
           <p>
             The software to assign lineages based on the algorithm that was developed by <a href="https://github.com/aineniamh">Áine O'Toole</a>, <a href="https://github.com/ViralVerity">Verity Hill</a>, <a href="https://github.com/jtmccr1">JT McCrone</a>, <a href="https://github.com/emilyscher">Emily Scher</a> and <a href="https://github.com/rambaut">Andrew Rambaut</a>.<br>The source code can be found <a href="https://github.com/hCoV-2019/pangolin">here</a>
           </p>
