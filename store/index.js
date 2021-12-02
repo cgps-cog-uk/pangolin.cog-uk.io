@@ -129,7 +129,8 @@ export const actions = {
         links
       );
       // eslint-disable-next-line no-unused-vars
-      const [_, pangolinVersion, lineagesVersion] = req.config.imageName.match("^.+:(.+?)_(.+)$");
+      const pangolinVersion = req.config.pangolinVersion;
+      const lineagesVersion = req.config.pangoLEARNVersion;
       const versions = { pangolinVersion, lineagesVersion };
       commit(
         "setVersions",
