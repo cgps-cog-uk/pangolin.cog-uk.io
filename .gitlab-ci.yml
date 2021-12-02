@@ -1,9 +1,9 @@
 build:
-  image: docker:19.03.1
+  image: docker:20.10.11
   only:
     - tags
   services:
-    - docker:19.03.1-dind
+    - docker:20.10.11-dind
   script:
     - docker login
       --username gitlab-ci-token
