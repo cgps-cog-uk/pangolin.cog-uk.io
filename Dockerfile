@@ -1,7 +1,7 @@
 FROM node:current-alpine AS Build
 ARG REPO_USER
 ARG REPO_TOKEN
-RUN apk add --update bash git python3 make g++
+RUN apk add --update bash git python2 make g++
 ENV npm_config_unsafe_perm=true
 RUN npm config set unsafe-perm true && npm install -g npm@6.13.7
 
