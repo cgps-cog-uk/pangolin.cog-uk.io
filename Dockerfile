@@ -1,4 +1,4 @@
-FROM node:carbon-alpine AS Build
+FROM node:current-alpine AS Build
 ARG REPO_USER
 ARG REPO_TOKEN
 RUN apk add --update bash git python make g++
@@ -20,7 +20,7 @@ RUN API_URL_BROWSER=/ \
     API_URL=localhost:3000 \
     npm run build
 
-FROM node:carbon-alpine
+FROM node:current-alpine
 WORKDIR /opt/coguk/
 CMD [ "npm", "start" ]
 COPY --from=Build /opt/coguk/ /opt/coguk/
