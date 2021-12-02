@@ -1,7 +1,5 @@
 build:
   image: docker:dind
-  variables:
-    NODE_TLS_REJECT_UNAUTHORIZED: 0
   only:
     - tags
   before_script:
