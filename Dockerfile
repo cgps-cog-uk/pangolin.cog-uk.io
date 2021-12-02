@@ -20,7 +20,7 @@ RUN API_URL_BROWSER=/ \
     API_URL=localhost:3000 \
     npm run build
 
-FROM node:current-alpine
+FROM node:10-alpine
 WORKDIR /opt/coguk/
 CMD [ "npm", "start" ]
 COPY --from=Build /opt/coguk/ /opt/coguk/
