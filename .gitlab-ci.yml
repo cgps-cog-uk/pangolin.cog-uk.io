@@ -4,6 +4,7 @@ build:
   services:
     - docker:19.03.1-dind
   script:
+    - apk add --update docker
     - docker login
       --username gitlab-ci-token
       --password $CI_JOB_TOKEN $CI_REGISTRY
