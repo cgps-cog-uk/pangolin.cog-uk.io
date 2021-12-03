@@ -45,9 +45,9 @@
           <li>
             <a href="https://www.pathogensurveillance.net"><img src="/images/cgps.svg"></a>
           </li>
-          <li>. Hosted on
+          <li>Hosted on
           <li>
-            <a href="https://www.pathogensurveillance.net"><img src="/images/CLIMB.png"></a>
+            <a href="https://www.climb.ac.uk"><img src="/images/CLIMB.png"></a>
           </li>
         </ul>
       </footer>
@@ -163,12 +163,12 @@ section {
 
 footer {
   width: 100%;
-  padding: 8px 32px;
+  padding: 8px 32px 0px 32px;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #4a4a4f;
   align-items: flex-start;
   font-weight: 500;
@@ -183,9 +183,6 @@ footer ul {
   margin: 0;
   padding: 0;
 }
-footer ul li {
-  margin: .25rem 0;
-}
 footer a {
   color: #8C4240;
   text-decoration: none;
@@ -194,6 +191,8 @@ footer a {
 
 footer ul li img {
   height: 36px;
+  margin-right: 8px;
+  margin-left: 8px;
 }
 
 @media (min-width:768px) {
@@ -229,9 +228,6 @@ footer ul li img {
   footer ul {
     flex-direction: row;
     align-items: center;
-  }
-  footer ul li {
-    margin: .25rem;
   }
 }
 </style>
