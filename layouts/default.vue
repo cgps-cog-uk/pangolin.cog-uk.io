@@ -52,6 +52,7 @@
         </ul>
       </footer>
     </div>
+    <script defer data-domain="pangolin.cog-uk.io" src="https://analytics.cgps.dev/js/plausible.js"></script>
   </v-app>
 </template>
 
