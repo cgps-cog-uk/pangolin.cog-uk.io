@@ -71,7 +71,7 @@ export default {
       return `https://github.com/cov-lineages/pangolin/releases/tag/v${this.$store.state.pangolinVersion}`;
     },
     lineagesVersionLink() {
-      return `https://github.com/cov-lineages/pangoLEARN/releases/tag/${this.$store.state.lineagesVersion}`;
+      return `https://github.com/cov-lineages/pangolin-data/releases/tag/${this.$store.state.lineagesVersion}`;
     },
   },
   methods: {

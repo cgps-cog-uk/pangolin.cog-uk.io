@@ -113,40 +113,49 @@ class ResultsStore {
     for (const { seqId, status, result } of rows) {
       console.log(result);
       try {
-        const { lineage,
+        const {
+          lineage,
           conflict,
           ambiguity_score: ambiguityScore,
           scorpio_call: scorpioCall,
           scorpio_support: scorpioSupport,
           scorpio_conflict: scorpioConflict,
-          status: qcStatus,
+          scorpio_notes: scorpioNotes,
+          is_designated: isDesignated,
+          qc_status: qcStatus,
+          qc_notes: qcNotes,
           note,
-          version,
           pangolin_version: pangolinVersion,
-          pangoLEARN_version: pangoLEARNVersion,
+          pangolin_data_version: pangolinDataVersion,
+          scorpio_version: scorpioVersion,
+          constellation_version: constellationVersion,
         } = result;
         let error = null;
         if (status === "failed") {
           error = "Sequence unable to be processed with Pangolin (unknown error)";
-        } else if (status === "succeeded" && qcStatus !== "passed_qc") {
+        } else if (status === "succeeded" && qcStatus !== "pass") {
           error = `Sequence unable to be processed with Pangolin (${note})`;
         }
         statuses[seqId] = {
           id: seqId,
           done: ["succeeded", "failed"].includes(status),
-          success: status === "succeeded" && qcStatus === "passed_qc",
+          success: status === "succeeded" && qcStatus === "pass",
           error,
           qcStatus,
+          qcNotes,
           lineage,
           conflict,
           ambiguityScore,
           scorpioCall,
           scorpioSupport,
           scorpioConflict,
+          scorpioNotes,
+          isDesignated,
           note,
-          version,
           pangolinVersion,
-          pangoLEARNVersion,
+          pangolinDataVersion,
+          scorpioVersion,
+          constellationVersion,
         };
       } catch (err) {
         statuses[seqId] = {
