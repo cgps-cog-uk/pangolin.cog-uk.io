@@ -94,9 +94,9 @@ class ResultsStore {
     });
   }
 
-  async fetchOne(seqId) {
+  async fetchOne(seqId, pangolinVersion, pangolinDataVersion) {
     await this.connect();
-    return Result.findOne({ attributes: ["status", "result"], where: { seqId } });
+    return Result.findOne({ attributes: ["status", "result"], where: { seqId, pangolinVersion, pangolinDataVersion } });
   }
 
   async results(seqIds = []) {
