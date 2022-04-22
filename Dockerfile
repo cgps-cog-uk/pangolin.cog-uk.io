@@ -1,4 +1,4 @@
-FROM node:10-alpine AS Build
+FROM node:12-alpine AS Build
 ARG REPO_USER
 ARG REPO_TOKEN
 RUN apk add --update bash git python make g++

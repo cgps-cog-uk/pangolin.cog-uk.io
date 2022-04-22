@@ -10,7 +10,7 @@ const q = new Queue(
   async (input, cb) => {
     const { id: seqHash, sequence } = input;
     try {
-      const { status, result: existingResult } = await store.fetchOne(seqHash, config.pangolinVersion, config.pangolinDataVersion);
+      const { status, result: existingResult } = await store.fetchOne(seqHash);
       if (status === "succeeded") return cb(null, { id: seqHash, result: existingResult });
 
       await store.started(seqHash);

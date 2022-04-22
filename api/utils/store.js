@@ -1,5 +1,5 @@
 const { join, resolve } = require("path");
-
+const config = require("./config");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -9,24 +9,36 @@ const sequelize = new Sequelize({
 });
 
 const Result = sequelize.define("result", {
-  seqId: {
-    type: Sequelize.STRING,
-    unique: true,
-    primaryKey: true,
-  },
-  result: {
-    type: Sequelize.STRING,
-    get() {
-      const r = this.getDataValue("result");
-      if (!r) return {};
-      return JSON.parse(r);
+    seqId: {
+      type: Sequelize.STRING,
     },
-    set(val) {
-      this.setDataValue("result", JSON.stringify(val));
+    version: {
+      type: Sequelize.STRING,
     },
+    result: {
+      type: Sequelize.STRING,
+      get() {
+        const r = this.getDataValue("result");
+        if (!r) return {};
+        return JSON.parse(r);
+      },
+      set(val) {
+        this.setDataValue("result", JSON.stringify(val));
+      },
+    },
+    status: Sequelize.ENUM("created", "started", "succeeded", "failed"),
   },
-  status: Sequelize.ENUM("created", "started", "succeeded", "failed"),
-});
+  {
+    indexes: [
+      {
+        fields: [ 'seqId', 'version' ],
+        unique: true,
+      }
+    ]
+  });
+
+
+const version = `${config.pangolinVersion}__${config.pangolinDataVersion}`;
 
 class ResultsStore {
   constructor(options) {
@@ -43,7 +55,7 @@ class ResultsStore {
   async create(seqId) {
     await this.connect();
     try {
-      await Result.create({ seqId, status: "created" });
+      await Result.create({ seqId, status: "created", version });
       return true; // created
     } catch (err) {
       await Result.update({
@@ -51,7 +63,8 @@ class ResultsStore {
       }, {
         where: {
           seqId,
-          status: { [Op.notIn]: ["succeeded", "started"] },
+          version,
+          status: { [Op.notIn]: [ "succeeded", "started" ] }
         },
       });
       return false; // updated
@@ -65,6 +78,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
+        version,
         status: { [Op.ne]: "succeeded" },
       },
     });
@@ -72,12 +86,14 @@ class ResultsStore {
 
   async succeeded(seqId, result) {
     await this.connect();
+    const resultVersion = `${result.pangolin_version.replace(/^v/, '')}__${result.pangolin_data_version.match(/v\d+\.\d+.*$/)[0]}`;
     return Result.update({
       status: "succeeded",
       result,
     }, {
       where: {
         seqId,
+        version: resultVersion // Ensures correct result is filled in
       },
     });
   }
@@ -89,22 +105,27 @@ class ResultsStore {
     }, {
       where: {
         seqId,
+        version,
         status: { [Op.ne]: "succeeded" },
       },
     });
   }
 
-  async fetchOne(seqId, pangolinVersion, pangolinDataVersion) {
+  async fetchOne(seqId) {
     await this.connect();
-    return Result.findOne({ attributes: ["status", "result"], where: { seqId, pangolinVersion, pangolinDataVersion } });
+    return Result.findOne({
+      attributes: [ "status", "result" ],
+      where: { seqId, version }
+    });
   }
 
   async results(seqIds = []) {
     await this.connect();
     const rows = await Result.findAll({
-      attributes: ["seqId", "status", "result"],
+      attributes: [ "seqId", "status", "result" ],
       where: {
-        seqId: [...seqIds],
+        seqId: [ ...seqIds ],
+        version: version,
       },
     });
 
@@ -138,7 +159,7 @@ class ResultsStore {
         }
         statuses[seqId] = {
           id: seqId,
-          done: ["succeeded", "failed"].includes(status),
+          done: [ "succeeded", "failed" ].includes(status),
           success: status === "succeeded" && qcStatus === "pass",
           error,
           qcStatus,
