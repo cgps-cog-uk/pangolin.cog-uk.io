@@ -1,0 +1,17 @@
+version: "3"
+services:
+  pangolin:
+    container_name: pangolin
+    image: registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:v46
+    volumes:
+      - /home/ubuntu/pangolin.cog-uk.io/config.json:/opt/coguk/api/config.json
+      - /home/ubuntu/pangolin.cog-uk.io/sqlite-dbs/results.sqlite:/opt/coguk/results.sqlite
+      - /home/ubuntu/pangolin.cog-uk.io/sqlite-dbs/queue.sqlite:/opt/coguk/queue.sqlite
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - NUXT_HOST=127.0.0.1
+      - NUXT_PORT=3003
+      - API_URL_BROWSER=https://pangolin.cog-uk.io/
+    network_mode: host
+    restart: always
+    command: [ "npm", "start" ]
