@@ -72,7 +72,7 @@ export const mutations = {
       const result = results[entry.jobId];
       if (result && result.done) {
         if (result.success) {
-          if (result.qcStatus === "passed_qc") {
+          if (result.qcStatus === "pass") {
             entry.status = "Success";
           } else {
             entry.status = "Failed";
@@ -87,10 +87,14 @@ export const mutations = {
           entry.scorpioCall = result.scorpioCall;
           entry.scorpioSupport = result.scorpioSupport;
           entry.scorpioConflict = result.scorpioConflict;
-          entry.version = result.version;
+          entry.scorpioNotes = result.scorpioNotes;
+          entry.isDesignated = result.isDesignated;
           entry.pangolinVersion = result.pangolinVersion;
-          entry.pangoLEARNVersion = result.pangoLEARNVersion;
-          entry.qc_status = result.status;
+          entry.pangolinDataVersion = result.pangolinDataVersion;
+          entry.scorpioVersion = result.scorpioVersion;
+          entry.constellationVersion = result.constellationVersion;
+          entry.qcStatus = result.qcStatus;
+          entry.qcNotes = result.qcNotes;
           entry.note = result.note;
         }
         else {
@@ -130,7 +134,7 @@ export const actions = {
       );
       // eslint-disable-next-line no-unused-vars
       const pangolinVersion = req.config.pangolinVersion;
-      const lineagesVersion = req.config.pangoLEARNVersion;
+      const lineagesVersion = req.config.pangolinDataVersion;
       const versions = { pangolinVersion, lineagesVersion };
       commit(
         "setVersions",
@@ -165,7 +169,7 @@ export const actions = {
         "Scorpio conflict": scorpioConflict,
         Note: note,
         "pangolin version": state.pangolinVersion,
-        "pangoLEARN version": state.lineagesVersion,
+        "pangolin-data version": state.lineagesVersion,
 
       };
       rows.push(row);

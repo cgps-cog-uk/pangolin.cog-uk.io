@@ -134,10 +134,12 @@
             <strong>Scorpio conflict: </strong>
             {{ item.scorpioConflict }}
             <br>
+            <strong>Scorpio notes: </strong>
+            {{ item.scorpioNotes }}
+            <br>
             <strong>Note: </strong>
             {{ item.note }}
           </td>
-
           <td
             v-if="item.error"
             v-bind:colspan="headers.length"

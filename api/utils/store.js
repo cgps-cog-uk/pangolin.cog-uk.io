@@ -1,5 +1,5 @@
 const { join, resolve } = require("path");
-
+const config = require("./config");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -9,24 +9,36 @@ const sequelize = new Sequelize({
 });
 
 const Result = sequelize.define("result", {
-  seqId: {
-    type: Sequelize.STRING,
-    unique: true,
-    primaryKey: true,
-  },
-  result: {
-    type: Sequelize.STRING,
-    get() {
-      const r = this.getDataValue("result");
-      if (!r) return {};
-      return JSON.parse(r);
+    seqId: {
+      type: Sequelize.STRING,
     },
-    set(val) {
-      this.setDataValue("result", JSON.stringify(val));
+    version: {
+      type: Sequelize.STRING,
     },
+    result: {
+      type: Sequelize.STRING,
+      get() {
+        const r = this.getDataValue("result");
+        if (!r) return {};
+        return JSON.parse(r);
+      },
+      set(val) {
+        this.setDataValue("result", JSON.stringify(val));
+      },
+    },
+    status: Sequelize.ENUM("created", "started", "succeeded", "failed"),
   },
-  status: Sequelize.ENUM("created", "started", "succeeded", "failed"),
-});
+  {
+    indexes: [
+      {
+        fields: [ 'seqId', 'version' ],
+        unique: true,
+      }
+    ]
+  });
+
+
+const version = `${config.pangolinVersion}__${config.pangolinDataVersion}`;
 
 class ResultsStore {
   constructor(options) {
@@ -43,7 +55,7 @@ class ResultsStore {
   async create(seqId) {
     await this.connect();
     try {
-      await Result.create({ seqId, status: "created" });
+      await Result.create({ seqId, status: "created", version });
       return true; // created
     } catch (err) {
       await Result.update({
@@ -51,7 +63,8 @@ class ResultsStore {
       }, {
         where: {
           seqId,
-          status: { [Op.notIn]: ["succeeded", "started"] },
+          version,
+          status: { [Op.notIn]: [ "succeeded", "started" ] }
         },
       });
       return false; // updated
@@ -65,6 +78,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
+        version,
         status: { [Op.ne]: "succeeded" },
       },
     });
@@ -72,12 +86,14 @@ class ResultsStore {
 
   async succeeded(seqId, result) {
     await this.connect();
+    const resultVersion = `${result.pangolin_version.replace(/^v/, '')}__${result.pangolin_data_version.match(/v\d+\.\d+.*$/)[0]}`;
     return Result.update({
       status: "succeeded",
       result,
     }, {
       where: {
         seqId,
+        version: resultVersion // Ensures correct result is filled in
       },
     });
   }
@@ -89,6 +105,7 @@ class ResultsStore {
     }, {
       where: {
         seqId,
+        version,
         status: { [Op.ne]: "succeeded" },
       },
     });
@@ -96,15 +113,19 @@ class ResultsStore {
 
   async fetchOne(seqId) {
     await this.connect();
-    return Result.findOne({ attributes: ["status", "result"], where: { seqId } });
+    return Result.findOne({
+      attributes: [ "status", "result" ],
+      where: { seqId, version }
+    });
   }
 
   async results(seqIds = []) {
     await this.connect();
     const rows = await Result.findAll({
-      attributes: ["seqId", "status", "result"],
+      attributes: [ "seqId", "status", "result" ],
       where: {
-        seqId: [...seqIds],
+        seqId: [ ...seqIds ],
+        version: version,
       },
     });
 
@@ -113,40 +134,49 @@ class ResultsStore {
     for (const { seqId, status, result } of rows) {
       console.log(result);
       try {
-        const { lineage,
+        const {
+          lineage,
           conflict,
           ambiguity_score: ambiguityScore,
           scorpio_call: scorpioCall,
           scorpio_support: scorpioSupport,
           scorpio_conflict: scorpioConflict,
-          status: qcStatus,
+          scorpio_notes: scorpioNotes,
+          is_designated: isDesignated,
+          qc_status: qcStatus,
+          qc_notes: qcNotes,
           note,
-          version,
           pangolin_version: pangolinVersion,
-          pangoLEARN_version: pangoLEARNVersion,
+          pangolin_data_version: pangolinDataVersion,
+          scorpio_version: scorpioVersion,
+          constellation_version: constellationVersion,
         } = result;
         let error = null;
         if (status === "failed") {
           error = "Sequence unable to be processed with Pangolin (unknown error)";
-        } else if (status === "succeeded" && qcStatus !== "passed_qc") {
+        } else if (status === "succeeded" && qcStatus !== "pass") {
           error = `Sequence unable to be processed with Pangolin (${note})`;
         }
         statuses[seqId] = {
           id: seqId,
-          done: ["succeeded", "failed"].includes(status),
-          success: status === "succeeded" && qcStatus === "passed_qc",
+          done: [ "succeeded", "failed" ].includes(status),
+          success: status === "succeeded" && qcStatus === "pass",
           error,
           qcStatus,
+          qcNotes,
           lineage,
           conflict,
           ambiguityScore,
           scorpioCall,
           scorpioSupport,
           scorpioConflict,
+          scorpioNotes,
+          isDesignated,
           note,
-          version,
           pangolinVersion,
-          pangoLEARNVersion,
+          pangolinDataVersion,
+          scorpioVersion,
+          constellationVersion,
         };
       } catch (err) {
         statuses[seqId] = {

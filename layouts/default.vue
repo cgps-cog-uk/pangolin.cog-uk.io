@@ -38,8 +38,8 @@
         <span />
         <ul>
           <li>
-            Pangolin (version <a v-bind:href="pangolinVersionLink" target="_blank">{{ pangolinVersion }}</a>,
-            lineages version <a v-bind:href="lineagesVersionLink" target="_blank">{{ lineagesVersion }}</a>)
+            Pangolin (version <a v-bind:href="pangolinVersionLink" target="_blank">v{{ pangolinVersion }}</a>,
+            pangolin-data version <a v-bind:href="lineagesVersionLink" target="_blank">{{ lineagesVersion }}</a>)
             is built by <a href="https://github.com/aineniamh">Áine</a>, <a href="https://github.com/jtmccr1">JT</a>, <a href="https://github.com/ViralVerity">Verity</a>, <a href="https://github.com/emilyscher">Emily</a> and <a href="https://github.com/rambaut">Andrew</a>. Web Application by
           </li>
           <li>
@@ -72,7 +72,7 @@ export default {
       return `https://github.com/cov-lineages/pangolin/releases/tag/v${this.$store.state.pangolinVersion}`;
     },
     lineagesVersionLink() {
-      return `https://github.com/cov-lineages/pangoLEARN/releases/tag/${this.$store.state.lineagesVersion}`;
+      return `https://github.com/cov-lineages/pangolin-data/releases/tag/${this.$store.state.lineagesVersion}`;
     },
   },
   methods: {

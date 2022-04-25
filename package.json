@@ -1,6 +1,6 @@
 {
   "name": "pangolin.cog-uk.io",
-  "version": "46.0.0",
+  "version": "47.0.0",
   "description": "pangolin.cog-uk.io",
   "author": "CGPS",
   "private": true,
@@ -34,7 +34,7 @@
     "nuxt-vuex-localstorage": "^1.2.6",
     "papaparse": "^5.2.0",
     "sequelize": "^5.21.6",
-    "sqlite3": "^4.1.1",
+    "sqlite3": "^4.2.0",
     "uuid": "^7.0.3",
     "vue-qrcode-reader": "^2.1.1",
     "vuetify-datetime-picker": "^2.1.1",
@@ -42,6 +42,7 @@
     "xlsx": "^0.15.6"
   },
   "devDependencies": {
+    "@nuxt/types": "^2.15.8",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/vuetify": "^1.0.0",
