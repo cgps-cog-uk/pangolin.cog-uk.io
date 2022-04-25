@@ -2,7 +2,7 @@ version: "3"
 services:
   pangolin:
     container_name: pangolin
-    image: registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:v46
+    image: registry.gitlab.com/cgps/cog-uk/pangolin.cog-uk.io:v47
     volumes:
       - /home/ubuntu/pangolin.cog-uk.io/config.json:/opt/coguk/api/config.json
       - /home/ubuntu/pangolin.cog-uk.io/sqlite-dbs/results.sqlite:/opt/coguk/results.sqlite
