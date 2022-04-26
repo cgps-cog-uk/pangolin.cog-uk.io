@@ -2,4 +2,4 @@ db.sqlite
 files/
 node_modules/
 .git/
-docker-compose.yml
+deployment/

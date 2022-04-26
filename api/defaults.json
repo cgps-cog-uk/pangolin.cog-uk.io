@@ -1,8 +1,8 @@
 {
   "concurrent": 1,
-  "imageName": "registry.gitlab.com/cgps/cog-uk/pangolin:v16.0.0",
+  "imageName": "registry.gitlab.com/cgps/cog-uk/pangolin:v16.1.0",
   "pangolinVersion": "4.0.6",
-  "pangolinDataVersion": "v1.6",
+  "pangolinDataVersion": "v1.8",
   "ukLineageLink": "https://microreact.org/project/kAVNak95RmWKmLx6MUdaci-uk-sars-cov-2-2020-02-052021-10-27?dfc=lineage&dfo=equals&dfv=",
   "globalLineageLink": "https://microreact.org/project/pEETMMz5Ka4vbNjR4QWLyb-global-sars-cov-2-2019-12-242021-10-27?dfc=lineage&dfo=equals&dfv=",
   "microreactDataVersion": "2021-11-27",
